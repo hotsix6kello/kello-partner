@@ -1,0 +1,57 @@
+import {
+  CalendarClock,
+  House,
+  ImagePlus,
+  LogOut,
+  type LucideIcon,
+  Tag,
+} from "lucide-react";
+
+export type PortalNavItem = {
+  href: string;
+  label: string;
+  description: string;
+  icon: LucideIcon;
+};
+
+export const portalNavItems: PortalNavItem[] = [
+  {
+    href: "/dashboard",
+    label: "운영 홈",
+    description: "현재 준비 상태와 다음 작업 동선",
+    icon: House,
+  },
+  {
+    href: "/photos",
+    label: "사진",
+    description: "대표 이미지와 시술 컷 구조",
+    icon: ImagePlus,
+  },
+  {
+    href: "/menus",
+    label: "메뉴/가격",
+    description: "시술 항목, 가격, 소요 시간",
+    icon: Tag,
+  },
+  {
+    href: "/availability",
+    label: "예약 시간",
+    description: "운영 시간과 예약 가능 슬롯",
+    icon: CalendarClock,
+  },
+];
+
+export const logoutNavItem = {
+  href: "/login",
+  label: "로그아웃",
+  description: "로그인 미리보기 화면으로 이동",
+  icon: LogOut,
+};
+
+export function isActivePath(pathname: string, href: string) {
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+export function getCurrentSection(pathname: string) {
+  return portalNavItems.find((item) => isActivePath(pathname, item.href)) ?? portalNavItems[0];
+}

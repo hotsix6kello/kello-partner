@@ -1,0 +1,61 @@
+:root {
+  --color-ivory: #fbf6f1;
+  --color-ivory-deep: #f4ebe4;
+  --color-surface: rgba(255, 252, 249, 0.94);
+  --color-surface-strong: #fffdfb;
+  --color-border: rgba(201, 178, 179, 0.32);
+  --color-border-strong: rgba(184, 140, 145, 0.26);
+  --color-rose: #c98d94;
+  --color-rose-deep: #b97982;
+  --color-plum: #5f4a52;
+  --color-ink: #3f3136;
+  --color-muted: #826e74;
+  --color-muted-soft: #a49398;
+  --shadow-soft: 0 16px 34px rgba(86, 63, 68, 0.08);
+  --shadow-card: 0 26px 64px rgba(86, 63, 68, 0.12);
+  --radius-card: 24px;
+  --radius-pill: 999px;
+  --font-sans: "Inter", "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  background:
+    radial-gradient(circle at top left, rgba(201, 141, 148, 0.18) 0%, rgba(201, 141, 148, 0) 26%),
+    radial-gradient(circle at right 12%, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0) 20%),
+    linear-gradient(180deg, #fffdfb 0%, #f8f1ea 46%, #f3e9e2 100%);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  background: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}

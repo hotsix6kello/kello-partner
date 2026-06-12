@@ -2,8 +2,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "위켈로 파트너",
+  title: "위켈로 | 파트너",
   description: "제휴 매장을 위한 홈페이지형 파트너 포털 스캐폴드",
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+  },
 };
 
 export default function RootLayout({

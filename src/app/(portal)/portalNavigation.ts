@@ -2,7 +2,7 @@ import {
   CalendarClock,
   House,
   ImagePlus,
-  LogOut,
+  LogIn,
   type LucideIcon,
   Tag,
 } from "lucide-react";
@@ -41,11 +41,11 @@ export const portalNavItems: PortalNavItem[] = [
   },
 ];
 
-export const logoutNavItem = {
+export const authNavItem = {
   href: "/login",
-  label: "로그아웃",
-  description: "로그인 미리보기 화면으로 이동",
-  icon: LogOut,
+  label: "로그인",
+  description: "회원가입 또는 계정 진입",
+  icon: LogIn,
 };
 
 export function isActivePath(pathname: string, href: string) {

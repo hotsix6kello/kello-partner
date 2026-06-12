@@ -18,10 +18,10 @@ export default function MenusPage() {
             <span className={styles.placeholderIcon}>
               <Tag size={24} strokeWidth={2.1} />
             </span>
-            <h3 className={styles.placeholderTitle}>메뉴 편집 UI 스캐폴드</h3>
+            <h3 className={styles.placeholderTitle}>메뉴 편집 화면 스캐폴드</h3>
           </div>
           <p className={styles.placeholderText}>
-            CRUD를 바로 붙이기보다, 파트너가 가장 자주 만질 정보인 메뉴명, 가격, 소요 시간을 보기 좋은 순서로
+            저장 기능을 바로 붙이기보다, 파트너가 가장 자주 만질 정보인 메뉴명, 가격, 소요 시간을 보기 좋은 순서로
             배치하는 데 초점을 맞춘 프리뷰입니다.
           </p>
         </div>

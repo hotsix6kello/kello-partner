@@ -18,7 +18,7 @@ export default function PhotosPage() {
             <span className={styles.placeholderIcon}>
               <ImagePlus size={24} strokeWidth={2.1} />
             </span>
-            <h3 className={styles.placeholderTitle}>사진 업로드/정렬 UI 스캐폴드</h3>
+            <h3 className={styles.placeholderTitle}>사진 업로드/정렬 화면 스캐폴드</h3>
           </div>
           <p className={styles.placeholderText}>
             실제 업로드와 저장은 아직 연결하지 않았습니다. 대신 파트너가 어떤 종류의 이미지를 어떤 순서로

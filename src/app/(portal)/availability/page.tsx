@@ -18,11 +18,11 @@ export default function AvailabilityPage() {
             <span className={styles.placeholderIcon}>
               <CalendarClock size={24} strokeWidth={2.1} />
             </span>
-            <h3 className={styles.placeholderTitle}>예약 가능 시간 UI 스캐폴드</h3>
+            <h3 className={styles.placeholderTitle}>예약 가능 시간 화면 스캐폴드</h3>
           </div>
           <p className={styles.placeholderText}>
             아직 실제 예약 데이터와 연결하지 않았습니다. 대신 요일별 운영 시간, 휴무일, 예약 슬롯 배치를 어떤
-            흐름으로 편집할지 UI 뼈대만 먼저 정리합니다.
+            흐름으로 편집할지 화면 뼈대만 먼저 정리합니다.
           </p>
         </div>
 

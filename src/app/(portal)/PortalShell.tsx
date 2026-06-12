@@ -4,14 +4,14 @@ import Link from "next/link";
 import { Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { getCurrentSection, isActivePath, logoutNavItem, portalNavItems } from "./portalNavigation";
+import { authNavItem, getCurrentSection, isActivePath, portalNavItems } from "./portalNavigation";
 import styles from "./portal.module.css";
 
 export default function PortalShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const currentSection = getCurrentSection(pathname);
-  const LogoutIcon = logoutNavItem.icon;
+  const AuthIcon = authNavItem.icon;
 
   useEffect(() => {
     setSidebarOpen(false);
@@ -58,14 +58,14 @@ export default function PortalShell({ children }: { children: React.ReactNode })
       <aside className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : ""}`}>
         <div className={styles.sidebarPanel}>
           <Link href="/dashboard" className={styles.brand}>
-            <span className={styles.brandMark}>W</span>
+            <span className={styles.brandMark}>위</span>
             <span className={styles.brandCopy}>
-              <strong className={styles.brandTitle}>Partner Wekello</strong>
-              <span className={styles.brandSubtitle}>파트너 운영 미리보기</span>
+              <strong className={styles.brandTitle}>위켈로 파트너</strong>
+              <span className={styles.brandSubtitle}>파트너 운영 홈</span>
             </span>
           </Link>
 
-          <span className={styles.navLabel}>Quick Access</span>
+          <span className={styles.navLabel}>빠른 메뉴</span>
 
           <nav className={styles.navList}>
             {portalNavItems.map((item) => {
@@ -90,13 +90,13 @@ export default function PortalShell({ children }: { children: React.ReactNode })
             })}
           </nav>
 
-          <Link href={logoutNavItem.href} className={styles.logoutItem}>
+          <Link href={authNavItem.href} className={styles.logoutItem}>
             <span className={styles.navIcon}>
-              <LogoutIcon size={20} strokeWidth={2.1} />
+              <AuthIcon size={20} strokeWidth={2.1} />
             </span>
             <span className={styles.navCopy}>
-              <strong className={styles.navTitle}>{logoutNavItem.label}</strong>
-              <span className={styles.navDescription}>{logoutNavItem.description}</span>
+              <strong className={styles.navTitle}>{authNavItem.label}</strong>
+              <span className={styles.navDescription}>{authNavItem.description}</span>
             </span>
           </Link>
         </div>
@@ -114,12 +114,14 @@ export default function PortalShell({ children }: { children: React.ReactNode })
               <Menu size={20} strokeWidth={2.2} />
             </button>
             <div className={styles.headerCopy}>
-              <span className={styles.headerEyebrow}>Partner Wekello</span>
+              <span className={styles.headerEyebrow}>위켈로 파트너</span>
               <h1 className={styles.headerTitle}>{currentSection.label}</h1>
             </div>
           </div>
 
-          <div className={styles.headerBadge}>UI Preview</div>
+          <Link href="/login" className={styles.headerAction}>
+            로그인
+          </Link>
         </header>
 
         <main className={styles.pageBody}>

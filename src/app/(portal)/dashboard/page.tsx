@@ -4,7 +4,7 @@ import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { getOrCreateStore } from "@/lib/store/data";
 import { businessTypeLabels, businessTypeOrder } from "@/lib/menu/presets";
 import styles from "../portal.module.css";
-import { updateStoreBusinessTypes } from "./actions";
+import { updateStoreBusinessTypes, updateStoreProfile } from "./actions";
 
 const cards = [
   {
@@ -40,6 +40,71 @@ export default async function DashboardPage() {
         <p className={styles.introText}>
           매장 소개부터 메뉴, 예약 가능 시간까지 파트너 페이지에 필요한 핵심 정보를 한곳에서 관리하세요.
         </p>
+      </div>
+
+      <div className={styles.partnerSummary}>
+        <div className={styles.partnerSummaryTop}>
+          <div className={styles.partnerSummaryCopy}>
+            <span className={styles.partnerSummaryEyebrow}>매장 기본정보</span>
+            <h3 className={styles.partnerSummaryTitle}>고객에게 보여질 매장 정보를 입력하세요</h3>
+          </div>
+        </div>
+        <p className={styles.partnerSummaryText}>
+          상호명, 소개, 연락처, 주소는 파트너 페이지의 매장 정보 영역에 표시됩니다.
+        </p>
+
+        <form action={updateStoreProfile} className={styles.storeProfileForm}>
+          <div className={styles.storeProfileGrid}>
+            <div className={styles.fieldGroup}>
+              <label className={styles.fieldLabel}>상호명</label>
+              <input
+                type="text"
+                name="name"
+                defaultValue={store.name}
+                placeholder="매장 이름을 입력하세요"
+                className={styles.fieldInput}
+                required
+              />
+            </div>
+
+            <div className={styles.fieldGroup}>
+              <label className={styles.fieldLabel}>연락처</label>
+              <input
+                type="tel"
+                name="phone"
+                defaultValue={store.phone}
+                placeholder="예) 02-1234-5678"
+                className={styles.fieldInput}
+              />
+            </div>
+
+            <div className={styles.fieldGroup}>
+              <label className={styles.fieldLabel}>주소</label>
+              <input
+                type="text"
+                name="address"
+                defaultValue={store.address}
+                placeholder="매장 주소를 입력하세요"
+                className={styles.fieldInput}
+              />
+            </div>
+          </div>
+
+          <div className={styles.fieldGroup}>
+            <label className={styles.fieldLabel}>매장 소개</label>
+            <textarea
+              name="description"
+              defaultValue={store.description}
+              placeholder="매장의 특징이나 분위기를 소개해주세요"
+              className={styles.fieldTextarea}
+              rows={3}
+            />
+          </div>
+
+          <button type="submit" className={styles.businessTypeSubmit}>
+            매장 정보 저장
+          </button>
+        </form>
       </div>
 
       <div className={styles.partnerSummary}>

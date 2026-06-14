@@ -1163,35 +1163,44 @@ export type Database = {
       }
       stores: {
         Row: {
+          address: string
           business_types: Database["public"]["Enums"]["business_type"][]
           capacity: number
           created_at: string
+          description: string
           id: string
           lead_time_hours: number
           name: string
           owner_id: string
+          phone: string
           slot_interval_minutes: number
           updated_at: string
         }
         Insert: {
+          address?: string
           business_types?: Database["public"]["Enums"]["business_type"][]
           capacity?: number
           created_at?: string
+          description?: string
           id?: string
           lead_time_hours?: number
           name?: string
           owner_id: string
+          phone?: string
           slot_interval_minutes?: number
           updated_at?: string
         }
         Update: {
+          address?: string
           business_types?: Database["public"]["Enums"]["business_type"][]
           capacity?: number
           created_at?: string
+          description?: string
           id?: string
           lead_time_hours?: number
           name?: string
           owner_id?: string
+          phone?: string
           slot_interval_minutes?: number
           updated_at?: string
         }

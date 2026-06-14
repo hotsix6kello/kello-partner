@@ -4,6 +4,36 @@ import { revalidatePath } from "next/cache";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { categoryPresets, type BusinessType } from "@/lib/menu/presets";
 
+// Updates the store's basic profile shown to customers (name, intro, contact, address).
+export async function updateStoreProfile(formData: FormData) {
+  const supabase = await getSupabaseServerClient();
+  const { data: userData, error: userError } = await supabase.auth.getUser();
+
+  if (userError || !userData.user) {
+    throw new Error("로그인이 필요합니다.");
+  }
+
+  const name = (formData.get("name") as string).trim();
+  const description = (formData.get("description") as string).trim();
+  const phone = (formData.get("phone") as string).trim();
+  const address = (formData.get("address") as string).trim();
+
+  if (!name) {
+    throw new Error("상호명을 입력해주세요.");
+  }
+
+  const { error } = await supabase
+    .from("stores")
+    .update({ name, description, phone, address })
+    .eq("owner_id", userData.user.id);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  revalidatePath("/dashboard");
+}
+
 // Updates the store's business types and seeds default categories for any
 // newly selected type (skipping names that already exist for this store).
 export async function updateStoreBusinessTypes(formData: FormData) {

@@ -3,13 +3,31 @@ import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { getOrCreateStore } from "@/lib/store/data";
 import { getCategoriesWithMenuItems } from "@/lib/menu/data";
 import portalStyles from "../portal.module.css";
+import GuestNotice from "../GuestNotice";
 import styles from "./menus.module.css";
 import MenuEditor from "./MenuEditor";
 
 export default async function MenusPage() {
   const supabase = await getSupabaseServerClient();
   const { data: userData } = await supabase.auth.getUser();
-  const store = await getOrCreateStore(supabase, userData.user!.id);
+
+  if (!userData.user) {
+    return (
+      <section className={portalStyles.section}>
+        <div className={portalStyles.intro}>
+          <h2 className={portalStyles.introTitle}>메뉴/가격 관리</h2>
+          <p className={portalStyles.introText}>
+            카테고리와 시술 항목을 추가하고, 가격 표기 방식과 소요 시간을 설정하세요. 소요 시간은 예약 슬롯
+            계산에 사용되므로 30분 단위로 입력해야 합니다.
+          </p>
+        </div>
+
+        <GuestNotice description="메뉴와 가격을 등록하고 관리하려면 로그인해주세요." />
+      </section>
+    );
+  }
+
+  const store = await getOrCreateStore(supabase, userData.user.id);
   const categories = await getCategoriesWithMenuItems(supabase, store.id);
 
   return (

@@ -4,6 +4,7 @@ import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { getOrCreateStore } from "@/lib/store/data";
 import { businessTypeLabels, businessTypeOrder } from "@/lib/menu/presets";
 import styles from "../portal.module.css";
+import GuestNotice from "../GuestNotice";
 import { updateStoreBusinessTypes, updateStoreProfile } from "./actions";
 
 const cards = [
@@ -30,7 +31,41 @@ const cards = [
 export default async function DashboardPage() {
   const supabase = await getSupabaseServerClient();
   const { data: userData } = await supabase.auth.getUser();
-  const store = await getOrCreateStore(supabase, userData.user!.id);
+
+  if (!userData.user) {
+    return (
+      <section className={styles.section}>
+        <div className={styles.intro}>
+          <h2 className={styles.introTitle}>파트너 페이지 운영, 핵심 정보부터 간편하게</h2>
+          <p className={styles.introText}>
+            매장 소개부터 메뉴, 예약 가능 시간까지 파트너 페이지에 필요한 핵심 정보를 한곳에서 관리하세요.
+          </p>
+        </div>
+
+        <GuestNotice description="매장 정보를 등록하고 관리하려면 로그인해주세요." />
+
+        <div className={styles.dashboardGrid}>
+          {cards.map(({ href, title, description, icon: Icon }) => (
+            <Link key={href} href={href} className={styles.dashboardCard}>
+              <span className={styles.cardIcon}>
+                <Icon size={24} strokeWidth={2.1} />
+              </span>
+              <div className={styles.cardContent}>
+                <h3 className={styles.cardTitle}>{title}</h3>
+                <p className={styles.cardText}>{description}</p>
+              </div>
+              <span className={styles.cardLink}>
+                둘러보기
+                <ArrowRight size={18} strokeWidth={2.1} />
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  const store = await getOrCreateStore(supabase, userData.user.id);
   const selectedTypes = new Set(store.business_types);
 
   return (

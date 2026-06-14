@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { signOutAction } from "./actions";
 import { getCurrentSection, isActivePath, loginNavItem, logoutNavItem, portalNavItems } from "./portalNavigation";
+import BrandMark from "./BrandMark";
 import styles from "./portal.module.css";
 
 export default function PortalShell({
@@ -67,7 +68,7 @@ export default function PortalShell({
       <aside className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : ""}`}>
         <div className={styles.sidebarPanel}>
           <Link href="/dashboard" className={styles.brand}>
-            <span className={styles.brandMark}>위</span>
+            <BrandMark className={styles.brandMark} />
             <span className={styles.brandCopy}>
               <strong className={styles.brandTitle}>위켈로 파트너</strong>
               <span className={styles.brandSubtitle}>파트너 운영 홈</span>
@@ -139,7 +140,6 @@ export default function PortalShell({
               <Menu size={20} strokeWidth={2.2} />
             </button>
             <div className={styles.headerCopy}>
-              <span className={styles.headerEyebrow}>위켈로 파트너</span>
               <h1 className={styles.headerTitle}>{currentSection.label}</h1>
             </div>
           </div>

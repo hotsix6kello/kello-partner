@@ -5,7 +5,7 @@ import { Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { signOutAction } from "./actions";
-import { getCurrentSection, isActivePath, logoutNavItem, portalNavItems } from "./portalNavigation";
+import { getCurrentSection, isActivePath, loginNavItem, logoutNavItem, portalNavItems } from "./portalNavigation";
 import styles from "./portal.module.css";
 
 export default function PortalShell({
@@ -18,7 +18,9 @@ export default function PortalShell({
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const currentSection = getCurrentSection(pathname);
+  const isAuthenticated = userEmail !== null;
   const LogoutIcon = logoutNavItem.icon;
+  const LoginIcon = loginNavItem.icon;
 
   useEffect(() => {
     setSidebarOpen(false);
@@ -97,19 +99,31 @@ export default function PortalShell({
             })}
           </nav>
 
-          <form action={signOutAction}>
-            <button type="submit" className={styles.logoutItem}>
+          {isAuthenticated ? (
+            <form action={signOutAction}>
+              <button type="submit" className={styles.logoutItem}>
+                <span className={styles.navIcon}>
+                  <LogoutIcon size={20} strokeWidth={2.1} />
+                </span>
+                <span className={styles.navCopy}>
+                  <strong className={styles.navTitle}>{logoutNavItem.label}</strong>
+                  <span className={styles.navDescription}>
+                    {userEmail ?? logoutNavItem.description}
+                  </span>
+                </span>
+              </button>
+            </form>
+          ) : (
+            <Link href={loginNavItem.href} className={styles.logoutItem}>
               <span className={styles.navIcon}>
-                <LogoutIcon size={20} strokeWidth={2.1} />
+                <LoginIcon size={20} strokeWidth={2.1} />
               </span>
               <span className={styles.navCopy}>
-                <strong className={styles.navTitle}>{logoutNavItem.label}</strong>
-                <span className={styles.navDescription}>
-                  {userEmail ?? logoutNavItem.description}
-                </span>
+                <strong className={styles.navTitle}>{loginNavItem.label}</strong>
+                <span className={styles.navDescription}>{loginNavItem.description}</span>
               </span>
-            </button>
-          </form>
+            </Link>
+          )}
         </div>
       </aside>
 
@@ -130,11 +144,17 @@ export default function PortalShell({
             </div>
           </div>
 
-          <form action={signOutAction}>
-            <button type="submit" className={styles.headerAction}>
-              로그아웃
-            </button>
-          </form>
+          {isAuthenticated ? (
+            <form action={signOutAction}>
+              <button type="submit" className={styles.headerAction}>
+                로그아웃
+              </button>
+            </form>
+          ) : (
+            <Link href={loginNavItem.href} className={styles.headerAction}>
+              로그인
+            </Link>
+          )}
         </header>
 
         <main className={styles.pageBody}>

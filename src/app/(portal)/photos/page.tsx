@@ -3,12 +3,30 @@ import { getOrCreateStore } from "@/lib/store/data";
 import { getCategoryOptions } from "@/lib/menu/data";
 import { getPhotoSlots } from "@/lib/photos/data";
 import portalStyles from "../portal.module.css";
+import GuestNotice from "../GuestNotice";
 import PhotoEditor from "./PhotoEditor";
 
 export default async function PhotosPage() {
   const supabase = await getSupabaseServerClient();
   const { data: userData } = await supabase.auth.getUser();
-  const store = await getOrCreateStore(supabase, userData.user!.id);
+
+  if (!userData.user) {
+    return (
+      <section className={portalStyles.section}>
+        <div className={portalStyles.intro}>
+          <h2 className={portalStyles.introTitle}>사진 관리</h2>
+          <p className={portalStyles.introText}>
+            대표 이미지, 매장 인테리어, 시술 갤러리 사진을 슬롯별로 업로드하고 관리하세요. 업로드한 사진은
+            검수 후 노출됩니다.
+          </p>
+        </div>
+
+        <GuestNotice description="사진을 업로드하고 관리하려면 로그인해주세요." />
+      </section>
+    );
+  }
+
+  const store = await getOrCreateStore(supabase, userData.user.id);
   const [slots, categories] = await Promise.all([
     getPhotoSlots(supabase, store.id),
     getCategoryOptions(supabase, store.id),

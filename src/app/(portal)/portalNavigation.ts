@@ -2,6 +2,7 @@ import {
   CalendarClock,
   House,
   ImagePlus,
+  LogIn,
   LogOut,
   type LucideIcon,
   Tag,
@@ -45,6 +46,13 @@ export const logoutNavItem = {
   label: "로그아웃",
   description: "현재 계정에서 나가기",
   icon: LogOut,
+};
+
+export const loginNavItem = {
+  href: "/login",
+  label: "로그인",
+  description: "회원가입 또는 계정 진입",
+  icon: LogIn,
 };
 
 export function isActivePath(pathname: string, href: string) {

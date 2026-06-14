@@ -4,14 +4,21 @@ import Link from "next/link";
 import { Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { authNavItem, getCurrentSection, isActivePath, portalNavItems } from "./portalNavigation";
+import { signOutAction } from "./actions";
+import { getCurrentSection, isActivePath, logoutNavItem, portalNavItems } from "./portalNavigation";
 import styles from "./portal.module.css";
 
-export default function PortalShell({ children }: { children: React.ReactNode }) {
+export default function PortalShell({
+  children,
+  userEmail,
+}: {
+  children: React.ReactNode;
+  userEmail: string | null;
+}) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const currentSection = getCurrentSection(pathname);
-  const AuthIcon = authNavItem.icon;
+  const LogoutIcon = logoutNavItem.icon;
 
   useEffect(() => {
     setSidebarOpen(false);
@@ -90,15 +97,19 @@ export default function PortalShell({ children }: { children: React.ReactNode })
             })}
           </nav>
 
-          <Link href={authNavItem.href} className={styles.logoutItem}>
-            <span className={styles.navIcon}>
-              <AuthIcon size={20} strokeWidth={2.1} />
-            </span>
-            <span className={styles.navCopy}>
-              <strong className={styles.navTitle}>{authNavItem.label}</strong>
-              <span className={styles.navDescription}>{authNavItem.description}</span>
-            </span>
-          </Link>
+          <form action={signOutAction}>
+            <button type="submit" className={styles.logoutItem}>
+              <span className={styles.navIcon}>
+                <LogoutIcon size={20} strokeWidth={2.1} />
+              </span>
+              <span className={styles.navCopy}>
+                <strong className={styles.navTitle}>{logoutNavItem.label}</strong>
+                <span className={styles.navDescription}>
+                  {userEmail ?? logoutNavItem.description}
+                </span>
+              </span>
+            </button>
+          </form>
         </div>
       </aside>
 
@@ -119,9 +130,11 @@ export default function PortalShell({ children }: { children: React.ReactNode })
             </div>
           </div>
 
-          <Link href="/login" className={styles.headerAction}>
-            로그인
-          </Link>
+          <form action={signOutAction}>
+            <button type="submit" className={styles.headerAction}>
+              로그아웃
+            </button>
+          </form>
         </header>
 
         <main className={styles.pageBody}>

@@ -1,0 +1,266 @@
+.editor {
+  display: grid;
+  gap: 18px;
+}
+
+.card {
+  display: grid;
+  gap: 14px;
+  padding: 20px;
+  border-radius: 24px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.cardTitle {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--color-plum);
+}
+
+.cardText {
+  font-size: 0.86rem;
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+/* Schedule settings ------------------------------------------------- */
+
+.settingsForm {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  align-items: end;
+}
+
+.fieldGroup {
+  display: grid;
+  gap: 6px;
+}
+
+.fieldLabel {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--color-muted);
+}
+
+.fieldInput {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(201, 178, 179, 0.3);
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
+  color: var(--color-ink);
+}
+
+.saveButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(135deg, var(--color-rose), var(--color-rose-deep));
+  color: #fff;
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.saveButton:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+/* Business hours ------------------------------------------------------ */
+
+.hoursForm {
+  display: grid;
+  gap: 16px;
+}
+
+.hoursList {
+  display: grid;
+  gap: 10px;
+}
+
+.hoursRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(201, 178, 179, 0.2);
+  background: rgba(255, 255, 255, 0.66);
+}
+
+.dayLabelGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 64px;
+}
+
+.dayCheckbox {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-rose-deep);
+}
+
+.dayLabel {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--color-ink);
+}
+
+.timeFields,
+.breakFields {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.timeInput {
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(201, 178, 179, 0.3);
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 0.86rem;
+  color: var(--color-ink);
+}
+
+.timeInput:disabled {
+  opacity: 0.45;
+}
+
+.timeSeparator {
+  color: var(--color-muted-soft);
+  font-size: 0.86rem;
+}
+
+.breakFields {
+  margin-left: auto;
+}
+
+.breakToggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+/* Closed dates ---------------------------------------------------------- */
+
+.closedDatesSection {
+  display: grid;
+  gap: 14px;
+}
+
+.emptyText {
+  font-size: 0.86rem;
+  color: var(--color-muted);
+}
+
+.closedDatesList {
+  display: grid;
+  gap: 8px;
+  list-style: none;
+}
+
+.closedDateItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(201, 178, 179, 0.2);
+  background: rgba(255, 255, 255, 0.66);
+}
+
+.closedDateValue {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.closedDateReason {
+  margin-left: 10px;
+  font-size: 0.82rem;
+  color: var(--color-muted);
+}
+
+.addClosedDateForm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dateInput {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(201, 178, 179, 0.3);
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 0.86rem;
+  color: var(--color-ink);
+}
+
+.reasonInput {
+  flex: 1;
+  min-width: 160px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px dashed rgba(201, 178, 179, 0.4);
+  background: rgba(255, 255, 255, 0.6);
+  font-size: 0.86rem;
+}
+
+.addButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px dashed rgba(201, 178, 179, 0.4);
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--color-plum);
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.addButton:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-soft);
+}
+
+.iconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  border: 1px solid rgba(201, 178, 179, 0.26);
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--color-plum);
+  cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.iconButton:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+.iconButtonDanger {
+  color: #b3434a;
+}

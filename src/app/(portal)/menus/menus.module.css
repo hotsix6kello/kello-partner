@@ -1,0 +1,333 @@
+.emptyState {
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+  padding: 26px;
+  border-radius: 28px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.categoryList {
+  display: grid;
+  gap: 18px;
+}
+
+.categoryCard {
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 24px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.categoryHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.categoryNameForm {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.categoryNameInput {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(201, 178, 179, 0.3);
+  background: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-ink);
+}
+
+.categoryActions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.iconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  border: 1px solid rgba(201, 178, 179, 0.26);
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--color-plum);
+  cursor: pointer;
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.iconButton:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+.iconButton:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.iconButtonDanger {
+  color: #b3434a;
+}
+
+.saveButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(135deg, var(--color-rose), var(--color-rose-deep));
+  color: #fff;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.saveButton:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+.menuItemList {
+  display: grid;
+  gap: 14px;
+}
+
+.menuItemCard {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(201, 178, 179, 0.2);
+  background: rgba(255, 255, 255, 0.66);
+}
+
+.menuItemTopRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.menuItemNameInput {
+  flex: 1;
+  min-width: 160px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(201, 178, 179, 0.3);
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.76rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.badgePending {
+  background: rgba(201, 178, 179, 0.18);
+  color: var(--color-muted);
+}
+
+.badgeApproved {
+  background: rgba(116, 168, 130, 0.16);
+  color: #4f8c5e;
+}
+
+.badgeRejected {
+  background: rgba(201, 90, 90, 0.14);
+  color: #b3434a;
+}
+
+.rejectReason {
+  width: 100%;
+  font-size: 0.8rem;
+  color: #b3434a;
+  line-height: 1.5;
+}
+
+.fieldGrid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.fieldGroup {
+  display: grid;
+  gap: 6px;
+}
+
+.fieldLabel {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--color-muted);
+}
+
+.fieldInput,
+.fieldSelect,
+.fieldTextarea {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(201, 178, 179, 0.3);
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
+  color: var(--color-ink);
+}
+
+.fieldTextarea {
+  resize: vertical;
+  min-height: 64px;
+  grid-column: 1 / -1;
+}
+
+.priceFields {
+  display: flex;
+  gap: 8px;
+}
+
+.priceFields .fieldGroup {
+  flex: 1;
+}
+
+.visibleField {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 22px;
+}
+
+.visibleCheckbox {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-rose-deep);
+}
+
+.menuItemFooter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.reorderGroup {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.optionsSection {
+  display: grid;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(201, 178, 179, 0.3);
+}
+
+.optionsLabel {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--color-muted-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.optionRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.optionNameInput {
+  flex: 2;
+  min-width: 120px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(201, 178, 179, 0.3);
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 0.86rem;
+}
+
+.optionPriceInput {
+  flex: 1;
+  min-width: 90px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(201, 178, 179, 0.3);
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 0.86rem;
+}
+
+.addForm {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.addInput {
+  flex: 1;
+  min-width: 160px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px dashed rgba(201, 178, 179, 0.4);
+  background: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+}
+
+.addButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px dashed rgba(201, 178, 179, 0.4);
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--color-plum);
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.addButton:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-soft);
+}
+
+.addCategoryForm {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 18px 20px;
+  border-radius: 24px;
+  border: 1px dashed rgba(201, 178, 179, 0.4);
+  background: rgba(255, 255, 255, 0.5);
+}

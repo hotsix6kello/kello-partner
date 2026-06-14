@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { ArrowRight, CalendarClock, ImagePlus, Tag } from "lucide-react";
+import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { getOrCreateStore } from "@/lib/store/data";
+import { businessTypeLabels, businessTypeOrder } from "@/lib/menu/presets";
 import styles from "../portal.module.css";
+import { updateStoreBusinessTypes, updateStoreProfile } from "./actions";
 
 const cards = [
   {
@@ -23,7 +27,12 @@ const cards = [
   },
 ];
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const supabase = await getSupabaseServerClient();
+  const { data: userData } = await supabase.auth.getUser();
+  const store = await getOrCreateStore(supabase, userData.user!.id);
+  const selectedTypes = new Set(store.business_types);
+
   return (
     <section className={styles.section}>
       <div className={styles.intro}>
@@ -36,15 +45,102 @@ export default function DashboardPage() {
       <div className={styles.partnerSummary}>
         <div className={styles.partnerSummaryTop}>
           <div className={styles.partnerSummaryCopy}>
-            <span className={styles.partnerSummaryEyebrow}>현재 준비 범위</span>
-            <h3 className={styles.partnerSummaryTitle}>파트너 페이지 기본 구성</h3>
+            <span className={styles.partnerSummaryEyebrow}>매장 기본정보</span>
+            <h3 className={styles.partnerSummaryTitle}>고객에게 보여질 매장 정보를 입력하세요</h3>
           </div>
-          <span className={styles.partnerSummaryStatus}>화면 설계 단계</span>
         </div>
         <p className={styles.partnerSummaryText}>
-          사진, 메뉴/가격, 예약 가능 시간처럼 고객이 가장 먼저 보는 정보부터 정리했습니다. 저장과 연동 기능은
-          다음 단계에서 연결됩니다.
+          상호명, 소개, 연락처, 주소는 파트너 페이지의 매장 정보 영역에 표시됩니다.
         </p>
+
+        <form action={updateStoreProfile} className={styles.storeProfileForm}>
+          <div className={styles.storeProfileGrid}>
+            <div className={styles.fieldGroup}>
+              <label className={styles.fieldLabel}>상호명</label>
+              <input
+                type="text"
+                name="name"
+                defaultValue={store.name}
+                placeholder="매장 이름을 입력하세요"
+                className={styles.fieldInput}
+                required
+              />
+            </div>
+
+            <div className={styles.fieldGroup}>
+              <label className={styles.fieldLabel}>연락처</label>
+              <input
+                type="tel"
+                name="phone"
+                defaultValue={store.phone}
+                placeholder="예) 02-1234-5678"
+                className={styles.fieldInput}
+              />
+            </div>
+
+            <div className={styles.fieldGroup}>
+              <label className={styles.fieldLabel}>주소</label>
+              <input
+                type="text"
+                name="address"
+                defaultValue={store.address}
+                placeholder="매장 주소를 입력하세요"
+                className={styles.fieldInput}
+              />
+            </div>
+          </div>
+
+          <div className={styles.fieldGroup}>
+            <label className={styles.fieldLabel}>매장 소개</label>
+            <textarea
+              name="description"
+              defaultValue={store.description}
+              placeholder="매장의 특징이나 분위기를 소개해주세요"
+              className={styles.fieldTextarea}
+              rows={3}
+            />
+          </div>
+
+          <button type="submit" className={styles.businessTypeSubmit}>
+            매장 정보 저장
+          </button>
+        </form>
+      </div>
+
+      <div className={styles.partnerSummary}>
+        <div className={styles.partnerSummaryTop}>
+          <div className={styles.partnerSummaryCopy}>
+            <span className={styles.partnerSummaryEyebrow}>운영 업종</span>
+            <h3 className={styles.partnerSummaryTitle}>업종을 선택하면 기본 메뉴 카테고리가 생성됩니다</h3>
+          </div>
+          <span className={styles.partnerSummaryStatus}>
+            {selectedTypes.size > 0 ? `${selectedTypes.size}개 선택됨` : "선택 필요"}
+          </span>
+        </div>
+        <p className={styles.partnerSummaryText}>
+          여러 업종을 동시에 운영한다면 모두 선택할 수 있습니다. 새로 선택한 업종의 기본 카테고리는
+          메뉴/가격 화면에 자동으로 추가되며, 이미 있는 카테고리는 중복으로 추가되지 않습니다.
+        </p>
+
+        <form action={updateStoreBusinessTypes} className={styles.businessTypeForm}>
+          <div className={styles.businessTypeGrid}>
+            {businessTypeOrder.map((type) => (
+              <label key={type} className={styles.businessTypeOption}>
+                <input
+                  type="checkbox"
+                  name="businessTypes"
+                  value={type}
+                  defaultChecked={selectedTypes.has(type)}
+                  className={styles.businessTypeCheckbox}
+                />
+                {businessTypeLabels[type]}
+              </label>
+            ))}
+          </div>
+          <button type="submit" className={styles.businessTypeSubmit}>
+            업종 저장
+          </button>
+        </form>
       </div>
 
       <div className={styles.dashboardGrid}>

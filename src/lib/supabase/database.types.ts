@@ -1181,11 +1181,16 @@ export type Database = {
           created_at: string
           description: string
           id: string
+          latitude: number | null
           lead_time_hours: number
+          longitude: number | null
           name: string
           owner_id: string
           partner_id: number | null
           phone: string
+          published: boolean
+          review_reason: string | null
+          review_status: string
           slot_interval_minutes: number
           updated_at: string
         }
@@ -1196,11 +1201,16 @@ export type Database = {
           created_at?: string
           description?: string
           id?: string
+          latitude?: number | null
           lead_time_hours?: number
+          longitude?: number | null
           name?: string
           owner_id: string
           partner_id?: number | null
           phone?: string
+          published?: boolean
+          review_reason?: string | null
+          review_status?: string
           slot_interval_minutes?: number
           updated_at?: string
         }
@@ -1211,11 +1221,16 @@ export type Database = {
           created_at?: string
           description?: string
           id?: string
+          latitude?: number | null
           lead_time_hours?: number
+          longitude?: number | null
           name?: string
           owner_id?: string
           partner_id?: number | null
           phone?: string
+          published?: boolean
+          review_reason?: string | null
+          review_status?: string
           slot_interval_minutes?: number
           updated_at?: string
         }

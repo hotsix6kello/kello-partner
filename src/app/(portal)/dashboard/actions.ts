@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { requireApprovedPartnerStore } from "@/lib/store/data";
 import { categoryPresets, type BusinessType } from "@/lib/menu/presets";
+import { geocodeAddress } from "@/lib/geocode";
 
 // Updates the store's basic profile shown to customers (name, intro, contact, address).
 export async function updateStoreProfile(formData: FormData) {
@@ -24,10 +25,25 @@ export async function updateStoreProfile(formData: FormData) {
     throw new Error("상호명을 입력해주세요.");
   }
 
-  const { error } = await supabase
-    .from("stores")
-    .update({ name, description, phone, address })
-    .eq("id", approvedStore.id);
+  const update: {
+    name: string;
+    description: string;
+    phone: string;
+    address: string;
+    latitude?: number;
+    longitude?: number;
+  } = { name, description, phone, address };
+
+  if (address && address !== approvedStore.address) {
+    const coordinates = await geocodeAddress(address);
+
+    if (coordinates) {
+      update.latitude = coordinates.lat;
+      update.longitude = coordinates.lng;
+    }
+  }
+
+  const { error } = await supabase.from("stores").update(update).eq("id", approvedStore.id);
 
   if (error) {
     throw new Error(error.message);

@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { ArrowRight, CalendarClock, ImagePlus, Tag } from "lucide-react";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
-import { getOrCreateStore } from "@/lib/store/data";
+import { getPartnerAccessForCurrentUser } from "@/lib/partners/access";
+import { getOrCreateStoreForApprovedPartner } from "@/lib/store/data";
 import { businessTypeLabels, businessTypeOrder } from "@/lib/menu/presets";
 import styles from "../portal.module.css";
 import GuestNotice from "../GuestNotice";
+import PartnerAccessNotice from "../PartnerAccessNotice";
 import { updateStoreBusinessTypes, updateStoreProfile } from "./actions";
 
 const cards = [
@@ -65,7 +67,17 @@ export default async function DashboardPage() {
     );
   }
 
-  const store = await getOrCreateStore(supabase, userData.user.id);
+  const access = await getPartnerAccessForCurrentUser(supabase);
+
+  if (access.status !== "approved") {
+    return (
+      <section className={styles.section}>
+        <PartnerAccessNotice access={access} />
+      </section>
+    );
+  }
+
+  const store = await getOrCreateStoreForApprovedPartner(supabase, access);
   const selectedTypes = new Set(store.business_types);
 
   return (

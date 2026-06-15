@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
-import { getOrCreateStore } from "@/lib/store/data";
+import { requireApprovedPartnerStore } from "@/lib/store/data";
 import type { Database } from "@/lib/supabase/database.types";
 
 async function requireStore(supabase: SupabaseClient<Database>) {
@@ -13,7 +13,7 @@ async function requireStore(supabase: SupabaseClient<Database>) {
     throw new Error("로그인이 필요합니다.");
   }
 
-  return getOrCreateStore(supabase, data.user.id);
+  return requireApprovedPartnerStore(supabase);
 }
 
 export async function updateScheduleSettings(formData: FormData) {

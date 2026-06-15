@@ -1,5 +1,6 @@
 import {
   CalendarClock,
+  ClipboardList,
   House,
   ImagePlus,
   LogIn,
@@ -39,6 +40,12 @@ export const portalNavItems: PortalNavItem[] = [
     label: "예약 시간",
     description: "운영 시간과 예약 가능 슬롯",
     icon: CalendarClock,
+  },
+  {
+    href: "/bookings",
+    label: "예약 목록",
+    description: "고객 예약과 상세 확인",
+    icon: ClipboardList,
   },
 ];
 

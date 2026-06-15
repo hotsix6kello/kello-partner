@@ -52,6 +52,32 @@ export async function updateStoreProfile(formData: FormData) {
   revalidatePath("/dashboard");
 }
 
+// Toggles whether the store is exposed to the 켈로 customer app's search/booking flows.
+// Only `published` is owner-controlled; review_status/review_reason are set by the 켈로 ops team.
+export async function setStorePublished(formData: FormData) {
+  const supabase = await getSupabaseServerClient();
+  const approvedStore = await requireApprovedPartnerStore(supabase);
+  const { data: userData, error: userError } = await supabase.auth.getUser();
+
+  if (userError || !userData.user) {
+    throw new Error("로그인이 필요합니다.");
+  }
+
+  const published = formData.get("published") === "true";
+
+  const { error } = await supabase
+    .from("stores")
+    .update({ published })
+    .eq("id", approvedStore.id)
+    .eq("owner_id", userData.user.id);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  revalidatePath("/dashboard");
+}
+
 // Updates the store's business types and seeds default categories for any
 // newly selected type (skipping names that already exist for this store).
 export async function updateStoreBusinessTypes(formData: FormData) {

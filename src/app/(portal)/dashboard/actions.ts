@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { requireApprovedPartnerStore } from "@/lib/store/data";
 import { categoryPresets, type BusinessType } from "@/lib/menu/presets";
+import { geocodeAddress } from "@/lib/geocode";
 
 // Updates the store's basic profile shown to customers (name, intro, contact, address).
 export async function updateStoreProfile(formData: FormData) {
@@ -24,10 +25,51 @@ export async function updateStoreProfile(formData: FormData) {
     throw new Error("상호명을 입력해주세요.");
   }
 
+  const update: {
+    name: string;
+    description: string;
+    phone: string;
+    address: string;
+    latitude?: number;
+    longitude?: number;
+  } = { name, description, phone, address };
+
+  if (address && address !== approvedStore.address) {
+    const coordinates = await geocodeAddress(address);
+
+    if (coordinates) {
+      update.latitude = coordinates.lat;
+      update.longitude = coordinates.lng;
+    }
+  }
+
+  const { error } = await supabase.from("stores").update(update).eq("id", approvedStore.id);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  revalidatePath("/dashboard");
+}
+
+// Toggles whether the store is exposed to the 켈로 customer app's search/booking flows.
+// Only `published` is owner-controlled; review_status/review_reason are set by the 켈로 ops team.
+export async function setStorePublished(formData: FormData) {
+  const supabase = await getSupabaseServerClient();
+  const approvedStore = await requireApprovedPartnerStore(supabase);
+  const { data: userData, error: userError } = await supabase.auth.getUser();
+
+  if (userError || !userData.user) {
+    throw new Error("로그인이 필요합니다.");
+  }
+
+  const published = formData.get("published") === "true";
+
   const { error } = await supabase
     .from("stores")
-    .update({ name, description, phone, address })
-    .eq("id", approvedStore.id);
+    .update({ published })
+    .eq("id", approvedStore.id)
+    .eq("owner_id", userData.user.id);
 
   if (error) {
     throw new Error(error.message);

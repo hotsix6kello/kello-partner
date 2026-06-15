@@ -7,7 +7,13 @@ import { businessTypeLabels, businessTypeOrder } from "@/lib/menu/presets";
 import styles from "../portal.module.css";
 import GuestNotice from "../GuestNotice";
 import PartnerAccessNotice from "../PartnerAccessNotice";
-import { updateStoreBusinessTypes, updateStoreProfile } from "./actions";
+import { setStorePublished, updateStoreBusinessTypes, updateStoreProfile } from "./actions";
+
+const reviewStatusMeta: Record<string, { label: string; className: string }> = {
+  pending: { label: "검수 대기", className: styles.reviewBadgePending },
+  approved: { label: "승인됨 · 노출 중", className: styles.reviewBadgeApproved },
+  rejected: { label: "반려됨", className: styles.reviewBadgeRejected },
+};
 
 const cards = [
   {
@@ -79,6 +85,11 @@ export default async function DashboardPage() {
 
   const store = await getOrCreateStoreForApprovedPartner(supabase, access);
   const selectedTypes = new Set(store.business_types);
+  const reviewMeta = reviewStatusMeta[store.review_status] ?? {
+    label: store.review_status,
+    className: styles.reviewBadgePending,
+  };
+  const hasCoordinates = store.latitude != null && store.longitude != null;
 
   return (
     <section className={styles.section}>
@@ -186,6 +197,39 @@ export default async function DashboardPage() {
           </div>
           <button type="submit" className={styles.businessTypeSubmit}>
             업종 저장
+          </button>
+        </form>
+      </div>
+
+      <div className={styles.partnerSummary}>
+        <div className={styles.partnerSummaryTop}>
+          <div className={styles.partnerSummaryCopy}>
+            <span className={styles.partnerSummaryEyebrow}>켈로 고객앱 노출</span>
+            <h3 className={styles.partnerSummaryTitle}>고객앱 공개 설정</h3>
+          </div>
+          <span className={`${styles.reviewBadge} ${reviewMeta.className}`}>{reviewMeta.label}</span>
+        </div>
+        <p className={styles.partnerSummaryText}>
+          공개를 켜도 운영팀 승인(approved) 전에는 켈로 고객앱에 노출되지 않습니다.
+        </p>
+
+        {store.review_status !== "approved" && store.review_reason ? (
+          <p className={styles.reviewReason}>검수 의견: {store.review_reason}</p>
+        ) : null}
+
+        {!hasCoordinates ? (
+          <p className={styles.coordinateHint}>주소를 저장하면 지도 노출이 활성화됩니다.</p>
+        ) : null}
+
+        <form action={setStorePublished} className={styles.publishToggleForm}>
+          <input type="hidden" name="published" value={(!store.published).toString()} />
+          <button type="submit" className={styles.publishToggle} aria-pressed={store.published}>
+            <span className={styles.publishToggleTrack}>
+              <span className={styles.publishToggleThumb} />
+            </span>
+            <span className={styles.publishToggleLabel}>
+              {store.published ? "켈로 고객앱에 공개 중" : "켈로 고객앱에 비공개"}
+            </span>
           </button>
         </form>
       </div>

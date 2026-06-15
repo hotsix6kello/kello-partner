@@ -2,11 +2,13 @@
 
 import { revalidatePath } from "next/cache";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { requireApprovedPartnerStore } from "@/lib/store/data";
 import { categoryPresets, type BusinessType } from "@/lib/menu/presets";
 
 // Updates the store's basic profile shown to customers (name, intro, contact, address).
 export async function updateStoreProfile(formData: FormData) {
   const supabase = await getSupabaseServerClient();
+  const approvedStore = await requireApprovedPartnerStore(supabase);
   const { data: userData, error: userError } = await supabase.auth.getUser();
 
   if (userError || !userData.user) {
@@ -25,7 +27,7 @@ export async function updateStoreProfile(formData: FormData) {
   const { error } = await supabase
     .from("stores")
     .update({ name, description, phone, address })
-    .eq("owner_id", userData.user.id);
+    .eq("id", approvedStore.id);
 
   if (error) {
     throw new Error(error.message);
@@ -38,6 +40,7 @@ export async function updateStoreProfile(formData: FormData) {
 // newly selected type (skipping names that already exist for this store).
 export async function updateStoreBusinessTypes(formData: FormData) {
   const supabase = await getSupabaseServerClient();
+  const approvedStore = await requireApprovedPartnerStore(supabase);
   const { data: userData, error: userError } = await supabase.auth.getUser();
 
   if (userError || !userData.user) {
@@ -49,7 +52,7 @@ export async function updateStoreBusinessTypes(formData: FormData) {
   const { data: store, error: storeError } = await supabase
     .from("stores")
     .select("id, business_types")
-    .eq("owner_id", userData.user.id)
+    .eq("id", approvedStore.id)
     .single();
 
   if (storeError) {

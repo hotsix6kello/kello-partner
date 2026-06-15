@@ -1,9 +1,11 @@
 import { getSupabaseServerClient } from "@/lib/supabase/server";
-import { getOrCreateStore } from "@/lib/store/data";
+import { getPartnerAccessForCurrentUser } from "@/lib/partners/access";
+import { getOrCreateStoreForApprovedPartner } from "@/lib/store/data";
 import { getCategoryOptions } from "@/lib/menu/data";
 import { getPhotoSlots } from "@/lib/photos/data";
 import portalStyles from "../portal.module.css";
 import GuestNotice from "../GuestNotice";
+import PartnerAccessNotice from "../PartnerAccessNotice";
 import PhotoEditor from "./PhotoEditor";
 
 export default async function PhotosPage() {
@@ -26,7 +28,17 @@ export default async function PhotosPage() {
     );
   }
 
-  const store = await getOrCreateStore(supabase, userData.user.id);
+  const access = await getPartnerAccessForCurrentUser(supabase);
+
+  if (access.status !== "approved") {
+    return (
+      <section className={portalStyles.section}>
+        <PartnerAccessNotice access={access} />
+      </section>
+    );
+  }
+
+  const store = await getOrCreateStoreForApprovedPartner(supabase, access);
   const [slots, categories] = await Promise.all([
     getPhotoSlots(supabase, store.id),
     getCategoryOptions(supabase, store.id),

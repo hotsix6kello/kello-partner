@@ -1,0 +1,138 @@
+.page {
+  min-height: 100vh;
+  display: grid;
+  align-content: start;
+  gap: 24px;
+  padding: 32px 20px 48px;
+  background: linear-gradient(180deg, rgba(255, 252, 249, 0.96), rgba(245, 236, 229, 0.98));
+}
+
+.header {
+  width: min(100%, 1120px);
+  margin: 0 auto;
+  display: grid;
+  gap: 8px;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--color-ink);
+}
+
+.description {
+  max-width: 70ch;
+  color: var(--color-muted);
+  line-height: 1.7;
+}
+
+.grid {
+  width: min(100%, 1120px);
+  margin: 0 auto;
+  display: grid;
+  gap: 18px;
+}
+
+.section {
+  display: grid;
+  gap: 12px;
+}
+
+.sectionTitle {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--color-plum);
+}
+
+.cardList {
+  display: grid;
+  gap: 12px;
+}
+
+.card {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: var(--shadow-soft);
+}
+
+.cardTop {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.itemTitle {
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.meta,
+.body {
+  color: var(--color-muted);
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
+.photoPreview {
+  width: min(100%, 220px);
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid rgba(201, 178, 179, 0.28);
+  background: rgba(201, 178, 179, 0.14);
+}
+
+.form {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.reasonInput {
+  flex: 1;
+  min-width: 220px;
+  min-height: 40px;
+  padding: 9px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(201, 178, 179, 0.3);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--color-ink);
+  font: inherit;
+}
+
+.approveButton,
+.rejectButton {
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: var(--radius-pill);
+  color: #fff;
+  font-size: 0.86rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.approveButton {
+  background: #4f8c5e;
+}
+
+.rejectButton {
+  background: #b3434a;
+}
+
+.notice {
+  width: min(100%, 760px);
+  margin: 0 auto;
+  padding: 22px;
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--color-muted);
+  line-height: 1.7;
+}

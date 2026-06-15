@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
-import { getOrCreateStore } from "@/lib/store/data";
+import { requireApprovedPartnerStore } from "@/lib/store/data";
 import type { Database } from "@/lib/supabase/database.types";
 import type { PhotoSlotType } from "@/lib/photos/data";
 import { MAX_PHOTO_SIZE_BYTES } from "./constants";
@@ -15,7 +15,7 @@ async function requireStore(supabase: SupabaseClient<Database>) {
     throw new Error("로그인이 필요합니다.");
   }
 
-  return getOrCreateStore(supabase, data.user.id);
+  return requireApprovedPartnerStore(supabase);
 }
 
 function clamp(value: number, min: number, max: number) {

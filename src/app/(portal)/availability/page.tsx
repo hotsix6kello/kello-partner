@@ -1,8 +1,10 @@
 import { getSupabaseServerClient } from "@/lib/supabase/server";
-import { getOrCreateStore } from "@/lib/store/data";
+import { getPartnerAccessForCurrentUser } from "@/lib/partners/access";
+import { getOrCreateStoreForApprovedPartner } from "@/lib/store/data";
 import { getBusinessHours, getClosedDates } from "@/lib/availability/data";
 import portalStyles from "../portal.module.css";
 import GuestNotice from "../GuestNotice";
+import PartnerAccessNotice from "../PartnerAccessNotice";
 import AvailabilityEditor from "./AvailabilityEditor";
 
 export default async function AvailabilityPage() {
@@ -25,7 +27,17 @@ export default async function AvailabilityPage() {
     );
   }
 
-  const store = await getOrCreateStore(supabase, userData.user.id);
+  const access = await getPartnerAccessForCurrentUser(supabase);
+
+  if (access.status !== "approved") {
+    return (
+      <section className={portalStyles.section}>
+        <PartnerAccessNotice access={access} />
+      </section>
+    );
+  }
+
+  const store = await getOrCreateStoreForApprovedPartner(supabase, access);
   const [businessHours, closedDates] = await Promise.all([
     getBusinessHours(supabase, store.id),
     getClosedDates(supabase, store.id),

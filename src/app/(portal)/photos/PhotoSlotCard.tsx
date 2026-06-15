@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { ImagePlus, Trash2 } from "lucide-react";
 import type { CategoryOption } from "@/lib/menu/data";
@@ -34,10 +35,13 @@ export default function PhotoSlotCard({
     <div className={styles.slotCard}>
       <div className={styles.preview}>
         {imageUrl ? (
-          <img
+          <Image
             src={imageUrl}
             alt=""
+            fill
+            unoptimized
             className={styles.previewImage}
+            sizes="(max-width: 768px) 100vw, 360px"
             style={
               slotType === "representative"
                 ? { objectPosition: `${previewCrop.x}% ${previewCrop.y}%` }

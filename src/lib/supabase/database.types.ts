@@ -895,6 +895,8 @@ export type Database = {
           price_type: Database["public"]["Enums"]["price_type"]
           review_reason: string | null
           review_status: Database["public"]["Enums"]["review_status"]
+          reviewed_at: string | null
+          reviewed_by: string | null
           store_id: string
           updated_at: string
           visible: boolean
@@ -913,6 +915,8 @@ export type Database = {
           price_type?: Database["public"]["Enums"]["price_type"]
           review_reason?: string | null
           review_status?: Database["public"]["Enums"]["review_status"]
+          reviewed_at?: string | null
+          reviewed_by?: string | null
           store_id: string
           updated_at?: string
           visible?: boolean
@@ -931,6 +935,8 @@ export type Database = {
           price_type?: Database["public"]["Enums"]["price_type"]
           review_reason?: string | null
           review_status?: Database["public"]["Enums"]["review_status"]
+          reviewed_at?: string | null
+          reviewed_by?: string | null
           store_id?: string
           updated_at?: string
           visible?: boolean
@@ -1012,6 +1018,8 @@ export type Database = {
           order_index: number
           review_reason: string | null
           review_status: Database["public"]["Enums"]["review_status"]
+          reviewed_at: string | null
+          reviewed_by: string | null
           slot_index: number
           slot_type: Database["public"]["Enums"]["photo_slot_type"]
           storage_path: string | null
@@ -1026,6 +1034,8 @@ export type Database = {
           order_index?: number
           review_reason?: string | null
           review_status?: Database["public"]["Enums"]["review_status"]
+          reviewed_at?: string | null
+          reviewed_by?: string | null
           slot_index?: number
           slot_type: Database["public"]["Enums"]["photo_slot_type"]
           storage_path?: string | null
@@ -1040,6 +1050,8 @@ export type Database = {
           order_index?: number
           review_reason?: string | null
           review_status?: Database["public"]["Enums"]["review_status"]
+          reviewed_at?: string | null
+          reviewed_by?: string | null
           slot_index?: number
           slot_type?: Database["public"]["Enums"]["photo_slot_type"]
           storage_path?: string | null
@@ -1172,6 +1184,7 @@ export type Database = {
           lead_time_hours: number
           name: string
           owner_id: string
+          partner_id: number | null
           phone: string
           slot_interval_minutes: number
           updated_at: string
@@ -1186,6 +1199,7 @@ export type Database = {
           lead_time_hours?: number
           name?: string
           owner_id: string
+          partner_id?: number | null
           phone?: string
           slot_interval_minutes?: number
           updated_at?: string
@@ -1200,11 +1214,20 @@ export type Database = {
           lead_time_hours?: number
           name?: string
           owner_id?: string
+          partner_id?: number | null
           phone?: string
           slot_interval_minutes?: number
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "stores_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partners"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       translation_batch_jobs: {
         Row: {

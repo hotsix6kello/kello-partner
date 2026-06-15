@@ -7,9 +7,9 @@ export const priceTypeLabels: Record<Database["public"]["Enums"]["price_type"], 
 };
 
 export const reviewStatusLabels: Record<Database["public"]["Enums"]["review_status"], string> = {
-  pending: "대기",
-  approved: "승인",
-  rejected: "반려",
+  pending: "검수 대기",
+  approved: "승인됨",
+  rejected: "반려됨",
 };
 
 // 30-minute increments, up to 6 hours.

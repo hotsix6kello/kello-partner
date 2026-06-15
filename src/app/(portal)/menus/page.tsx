@@ -1,9 +1,11 @@
 import { Tag } from "lucide-react";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
-import { getOrCreateStore } from "@/lib/store/data";
+import { getPartnerAccessForCurrentUser } from "@/lib/partners/access";
+import { getOrCreateStoreForApprovedPartner } from "@/lib/store/data";
 import { getCategoriesWithMenuItems } from "@/lib/menu/data";
 import portalStyles from "../portal.module.css";
 import GuestNotice from "../GuestNotice";
+import PartnerAccessNotice from "../PartnerAccessNotice";
 import styles from "./menus.module.css";
 import MenuEditor from "./MenuEditor";
 
@@ -27,7 +29,17 @@ export default async function MenusPage() {
     );
   }
 
-  const store = await getOrCreateStore(supabase, userData.user.id);
+  const access = await getPartnerAccessForCurrentUser(supabase);
+
+  if (access.status !== "approved") {
+    return (
+      <section className={portalStyles.section}>
+        <PartnerAccessNotice access={access} />
+      </section>
+    );
+  }
+
+  const store = await getOrCreateStoreForApprovedPartner(supabase, access);
   const categories = await getCategoriesWithMenuItems(supabase, store.id);
 
   return (

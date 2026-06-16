@@ -958,6 +958,30 @@ export type Database = {
           },
         ]
       }
+      partner_profiles: {
+        Row: {
+          id: string
+          email: string
+          name: string
+          is_admin: boolean
+          created_at: string
+        }
+        Insert: {
+          id: string
+          email?: string
+          name?: string
+          is_admin?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          email?: string
+          name?: string
+          is_admin?: boolean
+          created_at?: string
+        }
+        Relationships: []
+      }
       partners: {
         Row: {
           address: string | null
@@ -2203,6 +2227,30 @@ export type Database = {
           전화번호?: string | null
           주소?: string | null
           파트너ID?: number | null
+        }
+        Relationships: []
+      }
+      partner_profiles_ko: {
+        Row: {
+          관리자여부: boolean | null
+          생성일시: string | null
+          성함: string | null
+          이메일: string | null
+          사용자ID: string | null
+        }
+        Insert: {
+          관리자여부?: boolean | null
+          생성일시?: string | null
+          성함?: string | null
+          이메일?: string | null
+          사용자ID?: string | null
+        }
+        Update: {
+          관리자여부?: boolean | null
+          생성일시?: string | null
+          성함?: string | null
+          이메일?: string | null
+          사용자ID?: string | null
         }
         Relationships: []
       }

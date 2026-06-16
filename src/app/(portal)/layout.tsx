@@ -9,6 +9,8 @@ export default async function PortalLayout({
   const supabase = await getSupabaseServerClient();
   const { data } = await supabase.auth.getUser();
 
+  let isAdmin = false;
+
   if (data.user) {
     await supabase.from("partner_profiles").upsert(
       {
@@ -21,7 +23,19 @@ export default async function PortalLayout({
       },
       { onConflict: "id", ignoreDuplicates: true },
     );
+
+    const { data: profile } = await supabase
+      .from("partner_profiles")
+      .select("is_admin")
+      .eq("id", data.user.id)
+      .maybeSingle();
+
+    isAdmin = profile?.is_admin === true;
   }
 
-  return <PortalShell userEmail={data.user?.email ?? null}>{children}</PortalShell>;
+  return (
+    <PortalShell userEmail={data.user?.email ?? null} isAdmin={isAdmin}>
+      {children}
+    </PortalShell>
+  );
 }

@@ -44,17 +44,17 @@ export default async function AdminReviewsPage() {
 
   if (!access.user) {
     return (
-      <main className={styles.page}>
+      <div className={styles.page}>
         <div className={styles.notice}>관리자 검수 페이지를 보려면 로그인해 주세요.</div>
-      </main>
+      </div>
     );
   }
 
   if (!access.isAdmin) {
     return (
-      <main className={styles.page}>
+      <div className={styles.page}>
         <div className={styles.notice}>관리자 권한이 필요합니다.</div>
-      </main>
+      </div>
     );
   }
 
@@ -75,9 +75,9 @@ export default async function AdminReviewsPage() {
   if (menuError || photoError) {
     console.error("Failed to load review queue", menuError ?? photoError);
     return (
-      <main className={styles.page}>
+      <div className={styles.page}>
         <div className={styles.notice}>검수 대상을 불러오지 못했습니다.</div>
-      </main>
+      </div>
     );
   }
 
@@ -85,7 +85,7 @@ export default async function AdminReviewsPage() {
   const pendingPhotos = (photos ?? []) as PendingPhoto[];
 
   return (
-    <main className={styles.page}>
+    <div className={styles.page}>
       <header className={styles.header}>
         <h1 className={styles.title}>파트너 콘텐츠 검수</h1>
         <p className={styles.description}>
@@ -154,7 +154,7 @@ export default async function AdminReviewsPage() {
           </div>
         </section>
       </div>
-    </main>
+    </div>
   );
 }
 

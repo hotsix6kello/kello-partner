@@ -67,7 +67,7 @@ export default function PortalShell({
 
       <aside className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : ""}`}>
         <div className={styles.sidebarPanel}>
-          <Link href="/dashboard" className={styles.brand}>
+          <Link href="/" className={styles.brand}>
             <BrandMark className={styles.brandMark} />
             <span className={styles.brandCopy}>
               <strong className={styles.brandTitle}>위켈로 파트너</strong>

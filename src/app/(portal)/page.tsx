@@ -4,10 +4,10 @@ import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { getPartnerAccessForCurrentUser } from "@/lib/partners/access";
 import { getOrCreateStoreForApprovedPartner } from "@/lib/store/data";
 import { businessTypeLabels, businessTypeOrder } from "@/lib/menu/presets";
-import styles from "../portal.module.css";
-import GuestNotice from "../GuestNotice";
-import PartnerAccessNotice from "../PartnerAccessNotice";
-import { setStorePublished, updateStoreBusinessTypes, updateStoreProfile } from "./actions";
+import styles from "./portal.module.css";
+import GuestNotice from "./GuestNotice";
+import PartnerAccessNotice from "./PartnerAccessNotice";
+import { setStorePublished, updateStoreBusinessTypes, updateStoreProfile } from "./dashboard/actions";
 
 const reviewStatusMeta: Record<string, { label: string; className: string }> = {
   pending: { label: "검수 대기", className: styles.reviewBadgePending },

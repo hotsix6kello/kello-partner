@@ -50,7 +50,7 @@ export default function LoginForm() {
             </div>
           </div>
 
-          <Link href="/dashboard" className={styles.backLink}>
+          <Link href="/" className={styles.backLink}>
             <ArrowLeft size={16} strokeWidth={2.1} />
             운영 홈으로 돌아가기
           </Link>

@@ -49,7 +49,7 @@ export async function updateStoreProfile(formData: FormData) {
     throw new Error(error.message);
   }
 
-  revalidatePath("/dashboard");
+  revalidatePath("/");
 }
 
 // Toggles whether the store is exposed to the 켈로 customer app's search/booking flows.
@@ -75,7 +75,7 @@ export async function setStorePublished(formData: FormData) {
     throw new Error(error.message);
   }
 
-  revalidatePath("/dashboard");
+  revalidatePath("/");
 }
 
 // Updates the store's business types and seeds default categories for any
@@ -150,6 +150,6 @@ export async function updateStoreBusinessTypes(formData: FormData) {
     }
   }
 
-  revalidatePath("/dashboard");
+  revalidatePath("/");
   revalidatePath("/menus");
 }

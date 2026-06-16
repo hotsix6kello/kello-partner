@@ -18,7 +18,7 @@ export type PortalNavItem = {
 
 export const portalNavItems: PortalNavItem[] = [
   {
-    href: "/dashboard",
+    href: "/",
     label: "운영 홈",
     description: "현재 준비 상태와 다음 작업 동선",
     icon: House,

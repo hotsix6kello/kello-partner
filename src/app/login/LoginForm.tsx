@@ -21,7 +21,7 @@ export default function LoginForm() {
     setPendingAction(mode);
 
     const supabase = getSupabaseBrowserClient();
-    const redirectTo = `${window.location.origin}/auth/callback?next=/dashboard`;
+    const redirectTo = `${window.location.origin}/auth/callback`;
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {

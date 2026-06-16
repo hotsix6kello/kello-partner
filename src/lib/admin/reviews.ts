@@ -15,8 +15,8 @@ export async function getAdminReviewAccess(
   }
 
   const { data: profile, error: profileError } = await supabase
-    .from("profiles")
-    .select("is_admin, role")
+    .from("partner_profiles")
+    .select("is_admin")
     .eq("id", data.user.id)
     .maybeSingle();
 
@@ -25,8 +25,7 @@ export async function getAdminReviewAccess(
     return { isAdmin: false, user: data.user };
   }
 
-  const isAdmin =
-    profile?.is_admin === true || profile?.role === "admin" || profile?.role === "super_admin";
+  const isAdmin = profile?.is_admin === true;
 
   return isAdmin ? { isAdmin: true, user: data.user } : { isAdmin: false, user: data.user };
 }

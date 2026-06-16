@@ -2,12 +2,6 @@ import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { approvePartner, rejectPartner, togglePartnerVisibility } from "./actions";
 import styles from "./admin-partners.module.css";
 
-const statusLabel: Record<string, string> = {
-  pending: "대기중",
-  approved: "승인됨",
-  rejected: "반려됨",
-};
-
 export default async function AdminPartnersPage() {
   const supabase = await getSupabaseServerClient();
 

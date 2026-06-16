@@ -675,6 +675,58 @@
   box-shadow: var(--shadow-soft);
 }
 
+.applyForm {
+  display: grid;
+  gap: 14px;
+  width: 100%;
+  padding-top: 6px;
+  border-top: 1px solid var(--color-border);
+}
+
+.applyFormGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.applyFormRequired {
+  color: var(--color-rose-deep);
+}
+
+.applyFormActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.applyFormCancel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(201, 178, 179, 0.4);
+  background: transparent;
+  color: var(--color-muted);
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.18s ease;
+}
+
+.applyFormCancel:hover {
+  border-color: var(--color-rose);
+  color: var(--color-ink);
+}
+
+.applyFormError {
+  font-size: 0.85rem;
+  color: #b3434a;
+  line-height: 1.6;
+}
+
 .placeholderCard {
   padding: 16px;
   border-radius: 20px;

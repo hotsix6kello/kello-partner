@@ -1,6 +1,7 @@
 import { Clock3, ShieldAlert, ShieldCheck } from "lucide-react";
 import type { PartnerAccess } from "@/lib/partners/access";
 import GuestNotice from "./GuestNotice";
+import PartnerApplyForm from "./PartnerApplyForm";
 import styles from "./portal.module.css";
 
 const copyByStatus: Record<
@@ -45,6 +46,19 @@ export default function PartnerAccessNotice({ access }: { access: PartnerAccess 
         <h3 className={styles.guestNoticeTitle}>{copy.title}</h3>
         <p className={styles.guestNoticeText}>{copy.description}</p>
       </div>
+      {access.status === "no_partner" && <PartnerApplyForm mode="apply" />}
+      {access.status === "rejected" && (
+        <PartnerApplyForm
+          mode="reapply"
+          prefill={{
+            company_name: access.partner.company_name,
+            business_type: access.partner.business_type,
+            address: access.partner.address ?? "",
+            phone: access.partner.phone,
+            contact_name: access.partner.contact_name,
+          }}
+        />
+      )}
     </div>
   );
 }

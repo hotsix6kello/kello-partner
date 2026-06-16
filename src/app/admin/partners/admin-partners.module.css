@@ -1,0 +1,148 @@
+.page {
+  display: grid;
+  align-content: start;
+  gap: 32px;
+  padding: 32px 20px 48px;
+}
+
+.header {
+  display: grid;
+  gap: 6px;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-ink);
+}
+
+.description {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.section {
+  display: grid;
+  gap: 12px;
+}
+
+.sectionTitle {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-plum);
+  padding-bottom: 4px;
+  border-bottom: 2px solid rgba(201, 178, 179, 0.2);
+}
+
+.cardList {
+  display: grid;
+  gap: 10px;
+}
+
+.card {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 16px 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: var(--shadow-soft);
+}
+
+.cardInfo {
+  display: grid;
+  gap: 3px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.cardName {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-ink);
+}
+
+.cardMeta {
+  font-size: 0.84rem;
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+.rejectReason {
+  font-size: 0.84rem;
+  color: #b3434a;
+  line-height: 1.5;
+}
+
+.cardActions {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.rejectForm {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.reasonInput {
+  min-height: 36px;
+  width: 160px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(201, 178, 179, 0.3);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 0.84rem;
+}
+
+.approveButton,
+.rejectButton,
+.visibleButton,
+.hiddenButton {
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: var(--radius-pill);
+  color: #fff;
+  font-size: 0.84rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.approveButton {
+  background: #4f8c5e;
+}
+
+.rejectButton {
+  background: #b3434a;
+}
+
+.visibleButton {
+  background: #4f7a8c;
+}
+
+.hiddenButton {
+  background: #aaa;
+}
+
+.empty {
+  font-size: 0.88rem;
+  color: var(--color-muted);
+  padding: 14px 0;
+}
+
+.notice {
+  padding: 22px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--color-muted);
+}

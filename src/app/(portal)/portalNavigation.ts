@@ -1,6 +1,8 @@
 import {
+  Building2,
   CalendarClock,
   ClipboardList,
+  FileCheck2,
   House,
   ImagePlus,
   LogIn,
@@ -49,6 +51,21 @@ export const portalNavItems: PortalNavItem[] = [
   },
 ];
 
+export const adminNavItems: PortalNavItem[] = [
+  {
+    href: "/admin/partners",
+    label: "파트너 관리",
+    description: "신청 승인·반려·노출 관리",
+    icon: Building2,
+  },
+  {
+    href: "/admin/reviews",
+    label: "콘텐츠 검수",
+    description: "메뉴·사진 승인 및 반려",
+    icon: FileCheck2,
+  },
+];
+
 export const logoutNavItem = {
   label: "로그아웃",
   description: "현재 계정에서 나가기",
@@ -67,5 +84,8 @@ export function isActivePath(pathname: string, href: string) {
 }
 
 export function getCurrentSection(pathname: string) {
-  return portalNavItems.find((item) => isActivePath(pathname, item.href)) ?? portalNavItems[0];
+  return (
+    [...portalNavItems, ...adminNavItems].find((item) => isActivePath(pathname, item.href)) ??
+    portalNavItems[0]
+  );
 }

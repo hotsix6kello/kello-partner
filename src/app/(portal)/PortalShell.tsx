@@ -5,16 +5,18 @@ import { Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { signOutAction } from "./actions";
-import { getCurrentSection, isActivePath, loginNavItem, logoutNavItem, portalNavItems } from "./portalNavigation";
+import { adminNavItems, getCurrentSection, isActivePath, loginNavItem, logoutNavItem, portalNavItems } from "./portalNavigation";
 import BrandMark from "./BrandMark";
 import styles from "./portal.module.css";
 
 export default function PortalShell({
   children,
   userEmail,
+  isAdmin = false,
 }: {
   children: React.ReactNode;
   userEmail: string | null;
+  isAdmin?: boolean;
 }) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -99,6 +101,34 @@ export default function PortalShell({
               );
             })}
           </nav>
+
+          {isAdmin && (
+            <>
+              <span className={styles.navLabel}>관리자</span>
+              <nav className={styles.navList}>
+                {adminNavItems.map((item) => {
+                  const Icon = item.icon;
+                  const active = isActivePath(pathname, item.href);
+
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`${styles.navItem} ${active ? styles.navItemActive : ""}`}
+                    >
+                      <span className={styles.navIcon}>
+                        <Icon size={20} strokeWidth={active ? 2.4 : 2.1} />
+                      </span>
+                      <span className={styles.navCopy}>
+                        <strong className={styles.navTitle}>{item.label}</strong>
+                        <span className={styles.navDescription}>{item.description}</span>
+                      </span>
+                    </Link>
+                  );
+                })}
+              </nav>
+            </>
+          )}
 
           {isAuthenticated ? (
             <form action={signOutAction}>

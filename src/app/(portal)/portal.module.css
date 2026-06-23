@@ -164,6 +164,11 @@
   padding: 0 4px;
 }
 
+.sidebarFooter {
+  display: grid;
+  gap: 10px;
+}
+
 .legalLink {
   color: var(--color-muted);
   font-size: 0.72rem;

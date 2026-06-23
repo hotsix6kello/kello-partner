@@ -130,6 +130,7 @@ export default function PortalShell({
             </>
           )}
 
+          <div className={styles.sidebarFooter}>
           {isAuthenticated ? (
             <form action={signOutAction}>
               <button type="submit" className={styles.logoutItem}>
@@ -167,6 +168,7 @@ export default function PortalShell({
               </Link>
             ))}
           </nav>
+          </div>
         </div>
       </aside>
 

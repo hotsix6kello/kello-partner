@@ -158,8 +158,11 @@ export async function getPublicAvailabilitySlots(
     await Promise.all([
       supabase
         .from("stores")
-        .select("id, capacity, lead_time_hours, slot_interval_minutes")
+        .select("id, capacity, lead_time_hours, slot_interval_minutes, partners!inner(status, contract_status, is_public)")
         .eq("id", input.storeId)
+        .eq("partners.status", "approved")
+        .eq("partners.contract_status", "signed")
+        .eq("partners.is_public", true)
         .maybeSingle(),
       supabase
         .from("menu_items")

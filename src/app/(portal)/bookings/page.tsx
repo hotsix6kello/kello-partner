@@ -1,11 +1,17 @@
 import Link from "next/link";
-import { ArrowRight, CalendarCheck } from "lucide-react";
+import { ArrowRight, ClipboardCheck } from "lucide-react";
 import { getPartnerAccessForCurrentUser } from "@/lib/partners/access";
 import { getPartnerBookings } from "@/lib/partner-bookings/data";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import portalStyles from "../portal.module.css";
 import PartnerAccessNotice from "../PartnerAccessNotice";
+import { updatePartnerVisitStatus } from "./actions";
 import styles from "./bookings.module.css";
+
+const visitStatusLabels: Record<string, string> = {
+  completed: "방문 완료 확인됨",
+  no_show: "노쇼 확인됨",
+};
 
 function displayValue(value: string | null | undefined) {
   const trimmed = value?.trim();
@@ -35,9 +41,9 @@ export default async function BookingsPage() {
     return (
       <section className={portalStyles.section}>
         <div className={portalStyles.intro}>
-          <h2 className={portalStyles.introTitle}>예약 목록</h2>
+          <h2 className={portalStyles.introTitle}>이용 완료 확인</h2>
           <p className={portalStyles.introText}>
-            승인된 파트너만 자기 매장으로 들어온 예약 요청을 확인할 수 있습니다.
+            승인된 파트너만 Kello가 확정한 방문 건의 완료/노쇼 여부를 확인할 수 있습니다.
           </p>
         </div>
 
@@ -51,18 +57,19 @@ export default async function BookingsPage() {
   return (
     <section className={portalStyles.section}>
       <div className={portalStyles.intro}>
-        <h2 className={portalStyles.introTitle}>예약 목록</h2>
+        <h2 className={portalStyles.introTitle}>이용 완료 확인</h2>
         <p className={portalStyles.introText}>
-          고객이 요청한 예약을 확인하는 조회 전용 화면입니다. 예약 확정, 취소, 변경은 다음 단계에서 다룹니다.
+          고객 예약 요청, 확정, 변경, 취소 처리는 Kello 메인 어드민에서만 진행합니다. 이 화면에서는 Kello가 확정한
+          방문 건에 대해 실제 방문 완료 또는 노쇼 여부만 확인합니다.
         </p>
       </div>
 
       {bookings.length === 0 ? (
         <div className={styles.emptyState}>
           <span className={portalStyles.placeholderIcon}>
-            <CalendarCheck size={24} strokeWidth={2.1} />
+            <ClipboardCheck size={24} strokeWidth={2.1} />
           </span>
-          <p className={portalStyles.placeholderText}>아직 이 매장으로 들어온 예약이 없습니다.</p>
+          <p className={portalStyles.placeholderText}>아직 확인할 확정 방문 건이 없습니다.</p>
         </div>
       ) : (
         <div className={styles.bookingList}>
@@ -78,9 +85,11 @@ export default async function BookingsPage() {
                   </h3>
                 </div>
                 <div className={styles.statusGroup}>
-                  <span className={styles.statusPill}>예약 {displayValue(booking.status)}</span>
+                  <span className={styles.statusPill}>Kello 확정 {displayValue(booking.status)}</span>
                   <span className={styles.statusPill}>결제 {displayValue(booking.payment_status)}</span>
-                  <span className={styles.statusPill}>견적 {displayValue(booking.quote_status)}</span>
+                  <span className={styles.statusPill}>
+                    방문 {visitStatusLabels[booking.partner_visit_status ?? ""] ?? "확인 대기"}
+                  </span>
                 </div>
               </div>
 
@@ -92,11 +101,11 @@ export default async function BookingsPage() {
                   </span>
                 </div>
                 <div className={styles.metaItem}>
-                  <span className={styles.metaLabel}>예약일</span>
+                  <span className={styles.metaLabel}>이용일</span>
                   <span className={styles.metaValue}>{displayValue(booking.booking_date)}</span>
                 </div>
                 <div className={styles.metaItem}>
-                  <span className={styles.metaLabel}>예약시간</span>
+                  <span className={styles.metaLabel}>이용 시간</span>
                   <span className={styles.metaValue}>{displayValue(booking.booking_time)}</span>
                 </div>
                 <div className={styles.metaItem}>
@@ -105,10 +114,26 @@ export default async function BookingsPage() {
                 </div>
               </div>
 
-              <Link href={`/bookings/${booking.id}`} className={styles.detailLink}>
-                상세 보기
-                <ArrowRight size={16} strokeWidth={2.2} />
-              </Link>
+              <div className={styles.visitActions}>
+                <form action={updatePartnerVisitStatus}>
+                  <input type="hidden" name="booking_id" value={booking.id} />
+                  <input type="hidden" name="partner_visit_status" value="completed" />
+                  <button type="submit" className={styles.completeButton}>
+                    방문 완료
+                  </button>
+                </form>
+                <form action={updatePartnerVisitStatus}>
+                  <input type="hidden" name="booking_id" value={booking.id} />
+                  <input type="hidden" name="partner_visit_status" value="no_show" />
+                  <button type="submit" className={styles.noShowButton}>
+                    노쇼
+                  </button>
+                </form>
+                <Link href={`/bookings/${booking.id}`} className={styles.detailLink}>
+                  상세 확인
+                  <ArrowRight size={16} strokeWidth={2.2} />
+                </Link>
+              </div>
             </article>
           ))}
         </div>

@@ -6,7 +6,7 @@ This partner portal exposes read-only public catalog APIs for the Kello service.
 
 `GET /api/public/stores`
 
-Returns visible stores owned by approved partners only.
+Returns stores owned by partners only when `partners.status = approved`, `partners.contract_status = signed`, and `partners.is_public = true`.
 
 ```json
 {
@@ -39,7 +39,7 @@ Returns visible stores owned by approved partners only.
 
 `GET /api/public/stores/{storeId}`
 
-Returns one visible approved partner store.
+Returns one approved, signed, public partner store.
 
 ```json
 {
@@ -79,13 +79,14 @@ Returns one visible approved partner store.
 }
 ```
 
-The detail response only includes approved photos and menu items where `visible = true`. It does not expose `owner_id`, `partner_id`, review fields, storage paths, or internal booking notes.
+The detail response only includes approved photos and approved menu items where `visible = true`. The parent partner must be `status = approved`, `contract_status = signed`, and `is_public = true`. It does not expose `owner_id`, `partner_id`, review fields, storage paths, or internal booking notes.
 
 ## Availability
 
 `GET /api/public/stores/{storeId}/availability?date=YYYY-MM-DD&menuItemId={menuItemId}`
 
 Use `store.id` from the list/detail API as `storeId`, and an approved visible menu item `id` from detail as `menuItemId`.
+Availability is available only for stores whose parent partner is `status = approved`, `contract_status = signed`, and `is_public = true`.
 
 ```json
 {
@@ -132,6 +133,7 @@ Before inserting a booking, Kello should call the availability API again for the
 
 ## Exposure Rules
 
+- Do not render stores unless `partners.status = approved`, `partners.contract_status = signed`, and `partners.is_public = true`.
 - Do not render pending or rejected photos.
 - Do not render pending or rejected menu items.
 - Do not render invisible menu items.

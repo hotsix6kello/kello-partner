@@ -251,8 +251,11 @@ async function getPublicStoreParts(supabase: SupabaseClient<Database>, storeId: 
     await Promise.all([
       supabase
         .from("stores")
-        .select("id, name, description, phone, address, business_types")
+        .select("id, name, description, phone, address, business_types, partners!inner(status, contract_status, is_public)")
         .eq("id", storeId)
+        .eq("partners.status", "approved")
+        .eq("partners.contract_status", "signed")
+        .eq("partners.is_public", true)
         .maybeSingle(),
       supabase
         .from("categories")
@@ -317,7 +320,10 @@ export async function getPublicStores(
 ): Promise<PublicStoreSummary[]> {
   const { data: stores, error } = await supabase
     .from("stores")
-    .select("id, name, description, phone, address, business_types")
+    .select("id, name, description, phone, address, business_types, partners!inner(status, contract_status, is_public)")
+    .eq("partners.status", "approved")
+    .eq("partners.contract_status", "signed")
+    .eq("partners.is_public", true)
     .order("name", { ascending: true });
 
   if (error) {

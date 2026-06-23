@@ -112,6 +112,32 @@
   text-decoration: underline;
 }
 
+.visitActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.completeButton,
+.noShowButton {
+  min-height: 34px;
+  padding: 0 14px;
+  border-radius: var(--radius-pill);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.completeButton {
+  background: #4f8c5e;
+}
+
+.noShowButton {
+  background: #b3434a;
+}
+
 .detailHeader {
   display: grid;
   gap: 12px;

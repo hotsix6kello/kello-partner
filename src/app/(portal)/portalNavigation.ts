@@ -18,6 +18,11 @@ export type PortalNavItem = {
   icon: LucideIcon;
 };
 
+export type LegalNavItem = {
+  href: string;
+  label: string;
+};
+
 export const portalNavItems: PortalNavItem[] = [
   {
     href: "/",
@@ -79,11 +84,32 @@ export const loginNavItem = {
   icon: LogIn,
 };
 
+export const legalNavItems: LegalNavItem[] = [
+  {
+    href: "/legal/terms",
+    label: "이용약관",
+  },
+  {
+    href: "/legal/operation-policy",
+    label: "운영정책",
+  },
+  {
+    href: "/legal/privacy-policy",
+    label: "개인정보처리방침",
+  },
+];
+
 export function isActivePath(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
 export function getCurrentSection(pathname: string) {
+  const legalSection = legalNavItems.find((item) => isActivePath(pathname, item.href));
+
+  if (legalSection) {
+    return legalSection;
+  }
+
   return (
     [...portalNavItems, ...adminNavItems].find((item) => isActivePath(pathname, item.href)) ??
     portalNavItems[0]

@@ -5,7 +5,7 @@ import { Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { signOutAction } from "./actions";
-import { adminNavItems, getCurrentSection, isActivePath, loginNavItem, logoutNavItem, portalNavItems } from "./portalNavigation";
+import { adminNavItems, getCurrentSection, isActivePath, legalNavItems, loginNavItem, logoutNavItem, portalNavItems } from "./portalNavigation";
 import BrandMark from "./BrandMark";
 import styles from "./portal.module.css";
 
@@ -130,6 +130,7 @@ export default function PortalShell({
             </>
           )}
 
+          <div className={styles.sidebarFooter}>
           {isAuthenticated ? (
             <form action={signOutAction}>
               <button type="submit" className={styles.logoutItem}>
@@ -155,6 +156,19 @@ export default function PortalShell({
               </span>
             </Link>
           )}
+
+          <nav className={styles.legalLinks} aria-label="약관">
+            {legalNavItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`${styles.legalLink} ${isActivePath(pathname, item.href) ? styles.legalLinkActive : ""}`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+          </div>
         </div>
       </aside>
 

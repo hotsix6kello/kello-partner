@@ -31,7 +31,7 @@ export async function applyForPartner(formData: FormData) {
     .maybeSingle();
 
   if (existing) {
-    if (existing.status?.toLowerCase() === "pending") {
+    if (["pending", "pending_review"].includes(existing.status?.toLowerCase() ?? "")) {
       throw new Error("이미 검토 중인 신청이 있습니다.");
     }
 
@@ -43,7 +43,7 @@ export async function applyForPartner(formData: FormData) {
         address: address || null,
         phone,
         contact_name,
-        status: "pending",
+        status: "pending_review",
         reject_reason: null,
         reviewed_at: null,
       })
@@ -58,6 +58,7 @@ export async function applyForPartner(formData: FormData) {
       address: address || null,
       phone,
       contact_name,
+      status: "pending_review",
     });
 
     if (error) throw new Error(error.message);

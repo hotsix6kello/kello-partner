@@ -14,6 +14,7 @@ export type PartnerBookingListItem = Pick<
   | "customer_email"
   | "customer_name"
   | "payment_status"
+  | "partner_visit_status"
   | "primary_service_name"
   | "quote_service_name"
   | "quote_status"
@@ -31,6 +32,24 @@ export type PartnerBookingDetail = {
   images: PartnerBookingImage[];
   store: Store;
 };
+
+export const KELLO_CONFIRMED_BOOKING_STATUSES = [
+  "confirmed",
+  "confirmed_by_admin",
+  "scheduled",
+  "paid",
+  "예약확정",
+] as const;
+
+function isKelloConfirmedBooking(booking: Pick<BookingRow, "status" | "payment_status">) {
+  const status = booking.status?.trim().toLowerCase();
+  const paymentStatus = booking.payment_status?.trim().toLowerCase();
+
+  return (
+    KELLO_CONFIRMED_BOOKING_STATUSES.some((allowed) => allowed.toLowerCase() === status) ||
+    paymentStatus === "paid"
+  );
+}
 
 function uniqImages(images: PartnerBookingImage[]) {
   const seen = new Set<string>();
@@ -54,6 +73,7 @@ function toBookingListItem(booking: BookingRow): PartnerBookingListItem {
     customer_email: booking.customer_email,
     customer_name: booking.customer_name,
     payment_status: booking.payment_status,
+    partner_visit_status: booking.partner_visit_status,
     primary_service_name: booking.primary_service_name,
     quote_service_name: booking.quote_service_name,
     quote_status: booking.quote_status,
@@ -120,10 +140,10 @@ export async function getPartnerBookings(
 
   if (error) {
     console.error("Failed to load partner bookings", error);
-    throw new Error("예약 목록을 불러오지 못했습니다.");
+    throw new Error("이용 완료 확인 목록을 불러오지 못했습니다.");
   }
 
-  return { bookings: (data ?? []).map(toBookingListItem), store };
+  return { bookings: (data ?? []).filter(isKelloConfirmedBooking).map(toBookingListItem), store };
 }
 
 export async function getPartnerBookingDetail(
@@ -144,7 +164,7 @@ export async function getPartnerBookingDetail(
     throw new Error("예약 상세를 불러오지 못했습니다.");
   }
 
-  if (!booking) {
+  if (!booking || !isKelloConfirmedBooking(booking)) {
     return null;
   }
 

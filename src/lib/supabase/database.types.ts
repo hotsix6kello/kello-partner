@@ -185,6 +185,7 @@ export type Database = {
           localized_message: string
           operator_status: string | null
           paid_at: string | null
+          partner_visit_status: string | null
           payload_json: Json
           payment_method: string | null
           payment_status: string | null
@@ -263,6 +264,7 @@ export type Database = {
           localized_message: string
           operator_status?: string | null
           paid_at?: string | null
+          partner_visit_status?: string | null
           payload_json: Json
           payment_method?: string | null
           payment_status?: string | null
@@ -341,6 +343,7 @@ export type Database = {
           localized_message?: string
           operator_status?: string | null
           paid_at?: string | null
+          partner_visit_status?: string | null
           payload_json?: Json
           payment_method?: string | null
           payment_status?: string | null
@@ -988,10 +991,12 @@ export type Database = {
           business_type: string
           company_name: string
           contact_name: string
+          contract_status: string
           created_at: string
           description: string | null
           email: string
           id: number
+          is_public: boolean
           phone: string
           reject_reason: string | null
           reviewed_at: string | null
@@ -1004,10 +1009,12 @@ export type Database = {
           business_type: string
           company_name: string
           contact_name: string
+          contract_status?: string
           created_at?: string
           description?: string | null
           email: string
           id?: number
+          is_public?: boolean
           phone: string
           reject_reason?: string | null
           reviewed_at?: string | null
@@ -1020,10 +1027,12 @@ export type Database = {
           business_type?: string
           company_name?: string
           contact_name?: string
+          contract_status?: string
           created_at?: string
           description?: string | null
           email?: string
           id?: number
+          is_public?: boolean
           phone?: string
           reject_reason?: string | null
           reviewed_at?: string | null

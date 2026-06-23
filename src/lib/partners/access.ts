@@ -6,8 +6,11 @@ export type Partner = Database["public"]["Tables"]["partners"]["Row"];
 export type PartnerAccess =
   | { status: "not_authenticated"; user: null; partner: null }
   | { status: "no_partner"; user: User; partner: null }
-  | { status: "pending"; user: User; partner: Partner }
+  | { status: "draft"; user: User; partner: Partner }
+  | { status: "pending_review"; user: User; partner: Partner }
+  | { status: "needs_revision"; user: User; partner: Partner }
   | { status: "rejected"; user: User; partner: Partner }
+  | { status: "suspended"; user: User; partner: Partner }
   | { status: "approved"; user: User; partner: Partner };
 
 export const APPROVED_PARTNER_REQUIRED_MESSAGE = "승인된 파트너 계정이 필요합니다.";
@@ -31,7 +34,19 @@ function toPartnerAccess(user: User, partner: Partner | null): PartnerAccess {
     return { status: "rejected", user, partner };
   }
 
-  return { status: "pending", user, partner };
+  if (status === "draft") {
+    return { status: "draft", user, partner };
+  }
+
+  if (status === "needs_revision") {
+    return { status: "needs_revision", user, partner };
+  }
+
+  if (status === "suspended") {
+    return { status: "suspended", user, partner };
+  }
+
+  return { status: "pending_review", user, partner };
 }
 
 export async function getPartnerAccessForCurrentUser(

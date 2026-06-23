@@ -4,6 +4,8 @@ alter table public.partners
   add column if not exists is_public boolean not null default false,
   add column if not exists contract_status text not null default 'not_started';
 
+alter type public.business_type add value if not exists 'semipermanent' after 'waxing';
+
 update public.partners
 set
   status = case

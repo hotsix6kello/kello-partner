@@ -2635,6 +2635,7 @@ export type Database = {
         | "makeup"
         | "esthetic"
         | "waxing"
+        | "semipermanent"
       photo_slot_type: "representative" | "interior" | "treatment"
       price_type: "fixed" | "from" | "range"
       review_status: "pending" | "approved" | "rejected"
@@ -2773,6 +2774,7 @@ export const Constants = {
         "makeup",
         "esthetic",
         "waxing",
+        "semipermanent",
       ],
       photo_slot_type: ["representative", "interior", "treatment"],
       price_type: ["fixed", "from", "range"],

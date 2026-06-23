@@ -9,6 +9,7 @@ export const businessTypeOrder: BusinessType[] = [
   "makeup",
   "esthetic",
   "waxing",
+  "semipermanent",
 ];
 
 export const businessTypeLabels: Record<BusinessType, string> = {
@@ -18,6 +19,7 @@ export const businessTypeLabels: Record<BusinessType, string> = {
   makeup: "메이크업",
   esthetic: "에스테틱",
   waxing: "왁싱",
+  semipermanent: "반영구",
 };
 
 // Initial category seed per business type. These are only a starting point —
@@ -30,4 +32,5 @@ export const categoryPresets: Record<BusinessType, string[]> = {
   makeup: ["데일리", "웨딩·본식", "행사·촬영", "헤어 추가"],
   esthetic: ["페이셜", "바디", "등·바디 관리", "브라이덜"],
   waxing: ["페이스", "바디", "브라질리언", "부분(겨드랑이 등)"],
+  semipermanent: ["눈썹", "아이라인", "입술", "헤어라인"],
 };

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { ArrowRight, CalendarClock, FileCheck2, ImagePlus, Store, Tag, WalletCards } from "lucide-react";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { getPartnerAccessForCurrentUser } from "@/lib/partners/access";
@@ -110,6 +111,16 @@ export default async function DashboardPage() {
         <GuestNotice description="제휴 신청과 매장 정보를 관리하려면 로그인해 주세요." />
       </section>
     );
+  }
+
+  const { data: profile } = await supabase
+    .from("partner_profiles")
+    .select("is_admin")
+    .eq("id", userData.user.id)
+    .maybeSingle();
+
+  if (profile?.is_admin) {
+    redirect("/admin");
   }
 
   const access = await getPartnerAccessForCurrentUser(supabase);

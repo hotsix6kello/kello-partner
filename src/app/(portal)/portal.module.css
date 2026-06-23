@@ -175,7 +175,7 @@
   font-weight: 700;
   line-height: 1.5;
   text-decoration: underline;
-  text-decoration-color: transparent;
+  text-decoration-color: rgba(130, 110, 116, 0.28);
   text-underline-offset: 3px;
   transition: color 0.15s ease, text-decoration-color 0.15s ease;
 }
@@ -953,9 +953,9 @@
   gap: 16px;
   max-width: 860px;
   padding: 24px;
-  border-radius: 24px;
   border: 1px solid var(--color-border);
-  background: var(--color-surface);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.84);
   box-shadow: var(--shadow-soft);
 }
 

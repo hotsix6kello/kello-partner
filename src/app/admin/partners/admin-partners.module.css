@@ -144,6 +144,7 @@
   align-items: center;
   padding-left: 8px;
   border-left: 1px solid rgba(179, 67, 74, 0.18);
+  flex-wrap: wrap;
 }
 
 .reasonInput {
@@ -231,6 +232,19 @@
 
 .deleteButton {
   background: #7f1d1d;
+}
+
+.deleteButton:disabled {
+  background: #c7a7a7;
+  cursor: not-allowed;
+}
+
+.deleteError {
+  flex-basis: 100%;
+  color: #b3434a;
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.4;
 }
 
 .empty {

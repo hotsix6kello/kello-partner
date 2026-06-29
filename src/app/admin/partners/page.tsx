@@ -1,11 +1,11 @@
 import {
   approvePartner,
-  deletePartner,
   rejectPartner,
   requestPartnerRevision,
   togglePartnerVisibility,
   updatePartnerContractStatus,
 } from "./actions";
+import { DeletePartnerForm } from "./DeletePartnerForm";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import type { Database } from "@/lib/supabase/database.types";
 import styles from "./admin-partners.module.css";
@@ -194,18 +194,7 @@ function PartnerSection({
                 </form>
 
                 {mode === "closed" ? (
-                  <form action={deletePartner} className={styles.deleteForm}>
-                    <input type="hidden" name="id" value={partner.id} />
-                    <input
-                      name="confirmation"
-                      className={styles.deleteInput}
-                      placeholder="업체명 입력"
-                      aria-label={`${partner.company_name} 삭제 확인`}
-                    />
-                    <button type="submit" className={styles.deleteButton}>
-                      삭제
-                    </button>
-                  </form>
+                  <DeletePartnerForm partnerId={partner.id} companyName={partner.company_name} />
                 ) : null}
               </div>
             </article>

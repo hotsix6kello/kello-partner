@@ -50,6 +50,73 @@ export async function rejectPartner(formData: FormData) {
   revalidatePath("/admin/partners");
 }
 
+export async function deletePartner(formData: FormData) {
+  const supabase = await getSupabaseServerClient();
+  await requireAdminReviewAccess(supabase);
+
+  const id = Number(formData.get("id"));
+  const confirmation = (formData.get("confirmation") as string | null)?.trim() ?? "";
+
+  if (!Number.isFinite(id)) {
+    throw new Error("삭제할 파트너 정보가 올바르지 않습니다.");
+  }
+
+  const { data: partner, error: partnerError } = await supabase
+    .from("partners")
+    .select("id, company_name, status")
+    .eq("id", id)
+    .maybeSingle();
+
+  if (partnerError) throw new Error(partnerError.message);
+  if (!partner) throw new Error("삭제할 파트너를 찾을 수 없습니다.");
+  if (!["rejected", "suspended"].includes(partner.status)) {
+    throw new Error("반려/중지 상태의 파트너만 삭제할 수 있습니다.");
+  }
+  if (confirmation !== partner.company_name) {
+    throw new Error("업체명을 정확히 입력해야 삭제할 수 있습니다.");
+  }
+
+  const { data: stores, error: storesError } = await supabase
+    .from("stores")
+    .select("id")
+    .eq("partner_id", id);
+
+  if (storesError) throw new Error(storesError.message);
+
+  const storeIds = (stores ?? []).map((store) => store.id);
+
+  if (storeIds.length > 0) {
+    const { data: photos, error: photosError } = await supabase
+      .from("photos")
+      .select("storage_path")
+      .in("store_id", storeIds)
+      .not("storage_path", "is", null);
+
+    if (photosError) throw new Error(photosError.message);
+
+    const storagePaths = Array.from(
+      new Set((photos ?? []).map((photo) => photo.storage_path).filter(Boolean)),
+    );
+
+    if (storagePaths.length > 0) {
+      const { error: storageError } = await supabase.storage
+        .from("store-photos")
+        .remove(storagePaths);
+
+      if (storageError) throw new Error(storageError.message);
+    }
+
+    const { error: storeDeleteError } = await supabase.from("stores").delete().in("id", storeIds);
+
+    if (storeDeleteError) throw new Error(storeDeleteError.message);
+  }
+
+  const { error: deleteError } = await supabase.from("partners").delete().eq("id", id);
+
+  if (deleteError) throw new Error(deleteError.message);
+  revalidatePath("/admin/partners");
+}
+
 export async function togglePartnerVisibility(formData: FormData) {
   const supabase = await getSupabaseServerClient();
   await requireAdminReviewAccess(supabase);

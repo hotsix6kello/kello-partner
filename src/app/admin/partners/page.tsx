@@ -1,5 +1,6 @@
 import {
   approvePartner,
+  deletePartner,
   rejectPartner,
   requestPartnerRevision,
   togglePartnerVisibility,
@@ -191,6 +192,21 @@ function PartnerSection({
                     계약 저장
                   </button>
                 </form>
+
+                {mode === "closed" ? (
+                  <form action={deletePartner} className={styles.deleteForm}>
+                    <input type="hidden" name="id" value={partner.id} />
+                    <input
+                      name="confirmation"
+                      className={styles.deleteInput}
+                      placeholder="업체명 입력"
+                      aria-label={`${partner.company_name} 삭제 확인`}
+                    />
+                    <button type="submit" className={styles.deleteButton}>
+                      삭제
+                    </button>
+                  </form>
+                ) : null}
               </div>
             </article>
           ))}

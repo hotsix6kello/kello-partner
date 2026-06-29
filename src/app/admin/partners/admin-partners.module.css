@@ -138,6 +138,14 @@
   align-items: center;
 }
 
+.deleteForm {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  padding-left: 8px;
+  border-left: 1px solid rgba(179, 67, 74, 0.18);
+}
+
 .reasonInput {
   min-height: 36px;
   width: 160px;
@@ -150,12 +158,25 @@
   font-size: 0.84rem;
 }
 
+.deleteInput {
+  min-height: 36px;
+  width: 132px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(179, 67, 74, 0.25);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 0.84rem;
+}
+
 .approveButton,
 .rejectButton,
 .revisionButton,
 .visibleButton,
 .hiddenButton,
-.contractButton {
+.contractButton,
+.deleteButton {
   min-height: 36px;
   padding: 0 14px;
   border-radius: var(--radius-pill);
@@ -206,6 +227,10 @@
 
 .contractButton {
   background: #5f4a52;
+}
+
+.deleteButton {
+  background: #7f1d1d;
 }
 
 .empty {

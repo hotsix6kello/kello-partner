@@ -4,6 +4,10 @@ import { revalidatePath } from "next/cache";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { requireAdminReviewAccess } from "@/lib/admin/reviews";
 
+export type DeletePartnerState = {
+  message: string | null;
+};
+
 export async function approvePartner(formData: FormData) {
   const supabase = await getSupabaseServerClient();
   await requireAdminReviewAccess(supabase);
@@ -50,7 +54,21 @@ export async function rejectPartner(formData: FormData) {
   revalidatePath("/admin/partners");
 }
 
-export async function deletePartner(formData: FormData) {
+function getDeletePartnerErrorMessage(error: unknown) {
+  if (error instanceof Error) {
+    const message = error.message;
+
+    if (message.toLowerCase().includes("row-level security")) {
+      return "삭제 권한 정책이 아직 DB에 적용되지 않았습니다. Supabase migration 적용 후 다시 시도해 주세요.";
+    }
+
+    return message;
+  }
+
+  return "파트너 삭제 중 오류가 발생했습니다.";
+}
+
+async function deletePartnerRecord(formData: FormData) {
   const supabase = await getSupabaseServerClient();
   await requireAdminReviewAccess(supabase);
 
@@ -115,6 +133,18 @@ export async function deletePartner(formData: FormData) {
 
   if (deleteError) throw new Error(deleteError.message);
   revalidatePath("/admin/partners");
+}
+
+export async function deletePartner(
+  _previousState: DeletePartnerState,
+  formData: FormData,
+): Promise<DeletePartnerState> {
+  try {
+    await deletePartnerRecord(formData);
+    return { message: null };
+  } catch (error) {
+    return { message: getDeletePartnerErrorMessage(error) };
+  }
 }
 
 export async function togglePartnerVisibility(formData: FormData) {
